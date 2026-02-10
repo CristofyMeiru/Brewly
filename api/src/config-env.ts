@@ -1,5 +1,5 @@
 import { plainToClass } from 'class-transformer';
-import { IsEnum, IsInt, IsString, Max, Min, validateSync } from 'class-validator';
+import { IsEnum, IsInt, IsString, IsUrl, Max, Min, validateSync } from 'class-validator';
 
 export class EnvSchema {
   @IsInt()
@@ -13,8 +13,20 @@ export class EnvSchema {
 
   @IsString()
   DATABASE_URL: string;
-}
 
+  @IsString()
+  @IsUrl()
+  BETTER_AUTH_URL: string;
+
+  @IsString()
+  BETTER_AUTH_SECRET: string;
+
+  @IsString()
+  GOOGLE_CLIENT_ID: string;
+
+  @IsString()
+  GOOGLE_CLIENT_SECRET: string;
+}
 
 export function validate(env: Record<string, unknown>) {
   const validatedConfig = plainToClass(EnvSchema, env, {
@@ -28,4 +40,3 @@ export function validate(env: Record<string, unknown>) {
   }
   return validatedConfig;
 }
-
