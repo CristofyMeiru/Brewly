@@ -1,6 +1,7 @@
 import { PrismaService } from '@src/shared/services/prisma.service';
 import { betterAuth } from 'better-auth';
 import { prismaAdapter } from 'better-auth/adapters/prisma';
+import { openAPI } from 'better-auth/plugins';
 import 'dotenv/config';
 import { adminPlugin } from './admin-plugin/admin.plugin';
 import { user } from './schemas/user.schema';
@@ -20,5 +21,5 @@ export const auth = betterAuth({
     },
   },
   user,
-  plugins: [adminPlugin],
+  plugins: [adminPlugin, openAPI({ path: '/docs' })],
 });

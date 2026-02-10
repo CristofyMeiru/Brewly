@@ -1,20 +1,33 @@
+import { VersioningType } from '@nestjs/common';
 import { NestFactory } from '@nestjs/core';
-import {
-  FastifyAdapter,
-  NestFastifyApplication,
-} from '@nestjs/platform-fastify';
-import { AppModule } from 'src/app.module';
+import { FastifyAdapter, NestFastifyApplication } from '@nestjs/platform-fastify';
+import { AppModule } from '../app.module';
 import { setupCors } from './cors';
+import { setupGlobalPipes } from './pipes';
+import { setupScalar } from './scalar';
 import { swaggerSetup } from './swagger';
 
-export async function buildApp() {
-  const app = await NestFactory.create<NestFastifyApplication>(
-    AppModule,
-    new FastifyAdapter(),
-  );
+export async function bootstrapApp(): Promise<NestFastifyApplication> {
+  const NODE_ENV = process.env.NODE_ENV;
 
+  const adapter = new FastifyAdapter({});
+
+  const app = await NestFactory.create<NestFastifyApplication>(AppModule, adapter, {
+    bodyParser: false,
+  });
+
+  app.setGlobalPrefix('api');
+  app.enableVersioning({ type: VersioningType.URI });
   setupCors(app);
-  swaggerSetup(app);
+  setupGlobalPipes(app);
+  if (NODE_ENV == 'development') {
+    swaggerSetup(app);
+    setupScalar(app);
+  }
+
+  // if (NODE_ENV == 'production') {
+  //   app.useLogger(app.get(CustomLogger));
+  // }
 
   return app;
 }
