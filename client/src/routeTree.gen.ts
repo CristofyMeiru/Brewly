@@ -10,33 +10,91 @@
 
 import { Route as rootRouteImport } from './routes/@__root'
 import { Route as PageRouteImport } from './routes/@page'
+import { Route as PublicAuthVerificationPageRouteImport } from './routes/@_public/@auth/@verification/@page'
+import { Route as PublicAuthSignUpPageRouteImport } from './routes/@_public/@auth/@sign-up/@page'
+import { Route as PublicAuthSignInPageRouteImport } from './routes/@_public/@auth/@sign-in/@page'
+import { Route as PublicAuthForgotPasswordPageRouteImport } from './routes/@_public/@auth/@forgot-password/@page'
 
 const PageRoute = PageRouteImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const PublicAuthVerificationPageRoute =
+  PublicAuthVerificationPageRouteImport.update({
+    id: '/_public/auth/verification/',
+    path: '/auth/verification/',
+    getParentRoute: () => rootRouteImport,
+  } as any)
+const PublicAuthSignUpPageRoute = PublicAuthSignUpPageRouteImport.update({
+  id: '/_public/auth/sign-up/',
+  path: '/auth/sign-up/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const PublicAuthSignInPageRoute = PublicAuthSignInPageRouteImport.update({
+  id: '/_public/auth/sign-in/',
+  path: '/auth/sign-in/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const PublicAuthForgotPasswordPageRoute =
+  PublicAuthForgotPasswordPageRouteImport.update({
+    id: '/_public/auth/forgot-password/',
+    path: '/auth/forgot-password/',
+    getParentRoute: () => rootRouteImport,
+  } as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof PageRoute
+  '/auth/forgot-password/': typeof PublicAuthForgotPasswordPageRoute
+  '/auth/sign-in/': typeof PublicAuthSignInPageRoute
+  '/auth/sign-up/': typeof PublicAuthSignUpPageRoute
+  '/auth/verification/': typeof PublicAuthVerificationPageRoute
 }
 export interface FileRoutesByTo {
   '/': typeof PageRoute
+  '/auth/forgot-password': typeof PublicAuthForgotPasswordPageRoute
+  '/auth/sign-in': typeof PublicAuthSignInPageRoute
+  '/auth/sign-up': typeof PublicAuthSignUpPageRoute
+  '/auth/verification': typeof PublicAuthVerificationPageRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof PageRoute
+  '/_public/auth/forgot-password/': typeof PublicAuthForgotPasswordPageRoute
+  '/_public/auth/sign-in/': typeof PublicAuthSignInPageRoute
+  '/_public/auth/sign-up/': typeof PublicAuthSignUpPageRoute
+  '/_public/auth/verification/': typeof PublicAuthVerificationPageRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/'
+  fullPaths:
+    | '/'
+    | '/auth/forgot-password/'
+    | '/auth/sign-in/'
+    | '/auth/sign-up/'
+    | '/auth/verification/'
   fileRoutesByTo: FileRoutesByTo
-  to: '/'
-  id: '__root__' | '/'
+  to:
+    | '/'
+    | '/auth/forgot-password'
+    | '/auth/sign-in'
+    | '/auth/sign-up'
+    | '/auth/verification'
+  id:
+    | '__root__'
+    | '/'
+    | '/_public/auth/forgot-password/'
+    | '/_public/auth/sign-in/'
+    | '/_public/auth/sign-up/'
+    | '/_public/auth/verification/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   PageRoute: typeof PageRoute
+  PublicAuthForgotPasswordPageRoute: typeof PublicAuthForgotPasswordPageRoute
+  PublicAuthSignInPageRoute: typeof PublicAuthSignInPageRoute
+  PublicAuthSignUpPageRoute: typeof PublicAuthSignUpPageRoute
+  PublicAuthVerificationPageRoute: typeof PublicAuthVerificationPageRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -48,11 +106,43 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof PageRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/_public/auth/verification/': {
+      id: '/_public/auth/verification/'
+      path: '/auth/verification'
+      fullPath: '/auth/verification/'
+      preLoaderRoute: typeof PublicAuthVerificationPageRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/_public/auth/sign-up/': {
+      id: '/_public/auth/sign-up/'
+      path: '/auth/sign-up'
+      fullPath: '/auth/sign-up/'
+      preLoaderRoute: typeof PublicAuthSignUpPageRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/_public/auth/sign-in/': {
+      id: '/_public/auth/sign-in/'
+      path: '/auth/sign-in'
+      fullPath: '/auth/sign-in/'
+      preLoaderRoute: typeof PublicAuthSignInPageRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/_public/auth/forgot-password/': {
+      id: '/_public/auth/forgot-password/'
+      path: '/auth/forgot-password'
+      fullPath: '/auth/forgot-password/'
+      preLoaderRoute: typeof PublicAuthForgotPasswordPageRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
 const rootRouteChildren: RootRouteChildren = {
   PageRoute: PageRoute,
+  PublicAuthForgotPasswordPageRoute: PublicAuthForgotPasswordPageRoute,
+  PublicAuthSignInPageRoute: PublicAuthSignInPageRoute,
+  PublicAuthSignUpPageRoute: PublicAuthSignUpPageRoute,
+  PublicAuthVerificationPageRoute: PublicAuthVerificationPageRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
