@@ -10,38 +10,29 @@
 
 import { Route as rootRouteImport } from './routes/@__root'
 import { Route as PageRouteImport } from './routes/@page'
-import { Route as DashboardPageRouteImport } from './routes/@dashboard/@page'
 
 const PageRoute = PageRouteImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
-const DashboardPageRoute = DashboardPageRouteImport.update({
-  id: '/',
-  path: '/',
-  getParentRoute: () => DashboardLayoutRoute,
-} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof PageRoute
-  '/dashboard/': typeof DashboardPageRoute
 }
 export interface FileRoutesByTo {
   '/': typeof PageRoute
-  '/dashboard': typeof DashboardPageRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof PageRoute
-  '/dashboard/': typeof DashboardPageRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/dashboard/'
+  fullPaths: '/'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/dashboard'
-  id: '__root__' | '/' | '/dashboard/'
+  to: '/'
+  id: '__root__' | '/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -56,13 +47,6 @@ declare module '@tanstack/react-router' {
       fullPath: '/'
       preLoaderRoute: typeof PageRouteImport
       parentRoute: typeof rootRouteImport
-    }
-    '/dashboard/': {
-      id: '/dashboard/'
-      path: '/'
-      fullPath: '/dashboard/'
-      preLoaderRoute: typeof DashboardPageRouteImport
-      parentRoute: typeof DashboardLayoutRoute
     }
   }
 }

@@ -1,5 +1,6 @@
 import { QueryClient } from "@tanstack/react-query";
 import { RouterProvider, createRouter } from "@tanstack/react-router";
+import { TanStackRouterDevtools } from "@tanstack/react-router-devtools";
 import { setupRouterSsrQueryIntegration } from "@tanstack/react-router-ssr-query";
 import { StrictMode } from "react";
 import ReactDOM from "react-dom/client";
@@ -32,6 +33,7 @@ if (!rootElement.innerHTML) {
   root.render(
     <StrictMode>
       <RouterProvider router={router} />
+      
     </StrictMode>,
   );
 }
