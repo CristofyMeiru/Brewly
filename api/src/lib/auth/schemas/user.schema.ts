@@ -7,10 +7,12 @@ export const user: BetterAuthOptions['user'] = {
       required: false,
       unique: true,
       index: true,
+      returned: false,
     },
     cpfEncrypted: {
       type: 'string',
       required: false,
+      returned: false,
     },
     cpfMasked: {
       type: 'string',
