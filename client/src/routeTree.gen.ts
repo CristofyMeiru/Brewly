@@ -9,42 +9,59 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/@__root'
+import { Route as PublicLayoutRouteImport } from './routes/@_public/@layout'
+import { Route as PrivateLayoutRouteImport } from './routes/@_private/@layout'
 import { Route as PageRouteImport } from './routes/@page'
+import { Route as PrivateHomePageRouteImport } from './routes/@_private/@home/@page'
 import { Route as PublicAuthVerificationPageRouteImport } from './routes/@_public/@auth/@verification/@page'
 import { Route as PublicAuthSignUpPageRouteImport } from './routes/@_public/@auth/@sign-up/@page'
 import { Route as PublicAuthSignInPageRouteImport } from './routes/@_public/@auth/@sign-in/@page'
 import { Route as PublicAuthForgotPasswordPageRouteImport } from './routes/@_public/@auth/@forgot-password/@page'
 
+const PublicLayoutRoute = PublicLayoutRouteImport.update({
+  id: '/_public',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const PrivateLayoutRoute = PrivateLayoutRouteImport.update({
+  id: '/_private',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const PageRoute = PageRouteImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const PrivateHomePageRoute = PrivateHomePageRouteImport.update({
+  id: '/home/',
+  path: '/home/',
+  getParentRoute: () => PrivateLayoutRoute,
+} as any)
 const PublicAuthVerificationPageRoute =
   PublicAuthVerificationPageRouteImport.update({
-    id: '/_public/auth/verification/',
+    id: '/auth/verification/',
     path: '/auth/verification/',
-    getParentRoute: () => rootRouteImport,
+    getParentRoute: () => PublicLayoutRoute,
   } as any)
 const PublicAuthSignUpPageRoute = PublicAuthSignUpPageRouteImport.update({
-  id: '/_public/auth/sign-up/',
+  id: '/auth/sign-up/',
   path: '/auth/sign-up/',
-  getParentRoute: () => rootRouteImport,
+  getParentRoute: () => PublicLayoutRoute,
 } as any)
 const PublicAuthSignInPageRoute = PublicAuthSignInPageRouteImport.update({
-  id: '/_public/auth/sign-in/',
+  id: '/auth/sign-in/',
   path: '/auth/sign-in/',
-  getParentRoute: () => rootRouteImport,
+  getParentRoute: () => PublicLayoutRoute,
 } as any)
 const PublicAuthForgotPasswordPageRoute =
   PublicAuthForgotPasswordPageRouteImport.update({
-    id: '/_public/auth/forgot-password/',
+    id: '/auth/forgot-password/',
     path: '/auth/forgot-password/',
-    getParentRoute: () => rootRouteImport,
+    getParentRoute: () => PublicLayoutRoute,
   } as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof PageRoute
+  '/home/': typeof PrivateHomePageRoute
   '/auth/forgot-password/': typeof PublicAuthForgotPasswordPageRoute
   '/auth/sign-in/': typeof PublicAuthSignInPageRoute
   '/auth/sign-up/': typeof PublicAuthSignUpPageRoute
@@ -52,6 +69,7 @@ export interface FileRoutesByFullPath {
 }
 export interface FileRoutesByTo {
   '/': typeof PageRoute
+  '/home': typeof PrivateHomePageRoute
   '/auth/forgot-password': typeof PublicAuthForgotPasswordPageRoute
   '/auth/sign-in': typeof PublicAuthSignInPageRoute
   '/auth/sign-up': typeof PublicAuthSignUpPageRoute
@@ -60,6 +78,9 @@ export interface FileRoutesByTo {
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof PageRoute
+  '/_private': typeof PrivateLayoutRouteWithChildren
+  '/_public': typeof PublicLayoutRouteWithChildren
+  '/_private/home/': typeof PrivateHomePageRoute
   '/_public/auth/forgot-password/': typeof PublicAuthForgotPasswordPageRoute
   '/_public/auth/sign-in/': typeof PublicAuthSignInPageRoute
   '/_public/auth/sign-up/': typeof PublicAuthSignUpPageRoute
@@ -69,6 +90,7 @@ export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
     | '/'
+    | '/home/'
     | '/auth/forgot-password/'
     | '/auth/sign-in/'
     | '/auth/sign-up/'
@@ -76,6 +98,7 @@ export interface FileRouteTypes {
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
+    | '/home'
     | '/auth/forgot-password'
     | '/auth/sign-in'
     | '/auth/sign-up'
@@ -83,6 +106,9 @@ export interface FileRouteTypes {
   id:
     | '__root__'
     | '/'
+    | '/_private'
+    | '/_public'
+    | '/_private/home/'
     | '/_public/auth/forgot-password/'
     | '/_public/auth/sign-in/'
     | '/_public/auth/sign-up/'
@@ -91,14 +117,26 @@ export interface FileRouteTypes {
 }
 export interface RootRouteChildren {
   PageRoute: typeof PageRoute
-  PublicAuthForgotPasswordPageRoute: typeof PublicAuthForgotPasswordPageRoute
-  PublicAuthSignInPageRoute: typeof PublicAuthSignInPageRoute
-  PublicAuthSignUpPageRoute: typeof PublicAuthSignUpPageRoute
-  PublicAuthVerificationPageRoute: typeof PublicAuthVerificationPageRoute
+  PrivateLayoutRoute: typeof PrivateLayoutRouteWithChildren
+  PublicLayoutRoute: typeof PublicLayoutRouteWithChildren
 }
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
+    '/_public': {
+      id: '/_public'
+      path: ''
+      fullPath: '/'
+      preLoaderRoute: typeof PublicLayoutRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/_private': {
+      id: '/_private'
+      path: ''
+      fullPath: '/'
+      preLoaderRoute: typeof PrivateLayoutRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/': {
       id: '/'
       path: '/'
@@ -106,43 +144,78 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof PageRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/_private/home/': {
+      id: '/_private/home/'
+      path: '/home'
+      fullPath: '/home/'
+      preLoaderRoute: typeof PrivateHomePageRouteImport
+      parentRoute: typeof PrivateLayoutRoute
+    }
     '/_public/auth/verification/': {
       id: '/_public/auth/verification/'
       path: '/auth/verification'
       fullPath: '/auth/verification/'
       preLoaderRoute: typeof PublicAuthVerificationPageRouteImport
-      parentRoute: typeof rootRouteImport
+      parentRoute: typeof PublicLayoutRoute
     }
     '/_public/auth/sign-up/': {
       id: '/_public/auth/sign-up/'
       path: '/auth/sign-up'
       fullPath: '/auth/sign-up/'
       preLoaderRoute: typeof PublicAuthSignUpPageRouteImport
-      parentRoute: typeof rootRouteImport
+      parentRoute: typeof PublicLayoutRoute
     }
     '/_public/auth/sign-in/': {
       id: '/_public/auth/sign-in/'
       path: '/auth/sign-in'
       fullPath: '/auth/sign-in/'
       preLoaderRoute: typeof PublicAuthSignInPageRouteImport
-      parentRoute: typeof rootRouteImport
+      parentRoute: typeof PublicLayoutRoute
     }
     '/_public/auth/forgot-password/': {
       id: '/_public/auth/forgot-password/'
       path: '/auth/forgot-password'
       fullPath: '/auth/forgot-password/'
       preLoaderRoute: typeof PublicAuthForgotPasswordPageRouteImport
-      parentRoute: typeof rootRouteImport
+      parentRoute: typeof PublicLayoutRoute
     }
   }
 }
 
-const rootRouteChildren: RootRouteChildren = {
-  PageRoute: PageRoute,
+interface PrivateLayoutRouteChildren {
+  PrivateHomePageRoute: typeof PrivateHomePageRoute
+}
+
+const PrivateLayoutRouteChildren: PrivateLayoutRouteChildren = {
+  PrivateHomePageRoute: PrivateHomePageRoute,
+}
+
+const PrivateLayoutRouteWithChildren = PrivateLayoutRoute._addFileChildren(
+  PrivateLayoutRouteChildren,
+)
+
+interface PublicLayoutRouteChildren {
+  PublicAuthForgotPasswordPageRoute: typeof PublicAuthForgotPasswordPageRoute
+  PublicAuthSignInPageRoute: typeof PublicAuthSignInPageRoute
+  PublicAuthSignUpPageRoute: typeof PublicAuthSignUpPageRoute
+  PublicAuthVerificationPageRoute: typeof PublicAuthVerificationPageRoute
+}
+
+const PublicLayoutRouteChildren: PublicLayoutRouteChildren = {
   PublicAuthForgotPasswordPageRoute: PublicAuthForgotPasswordPageRoute,
   PublicAuthSignInPageRoute: PublicAuthSignInPageRoute,
   PublicAuthSignUpPageRoute: PublicAuthSignUpPageRoute,
   PublicAuthVerificationPageRoute: PublicAuthVerificationPageRoute,
+}
+
+const PublicLayoutRouteWithChildren = PublicLayoutRoute._addFileChildren(
+  PublicLayoutRouteChildren,
+)
+
+const rootRouteChildren: RootRouteChildren = {
+  PageRoute: PageRoute,
+  PrivateLayoutRoute: PrivateLayoutRouteWithChildren,
+  PublicLayoutRoute: PublicLayoutRouteWithChildren,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
