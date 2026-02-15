@@ -1,7 +1,7 @@
 import { APP_NAME } from "@/common/constants/metadata";
+import { Button } from "@/components/ui/button";
 import { createFileRoute, Link } from "@tanstack/react-router";
 import SignUpEmailForm from "./sign-up-email.form";
-import { Button } from "@/components/ui/button";
 
 export const Route = createFileRoute("/_public/auth/sign-up/")({
   component: RouteComponent,
@@ -12,7 +12,7 @@ export const Route = createFileRoute("/_public/auth/sign-up/")({
 
 function RouteComponent() {
   return (
-    <main className="  flex flex-col items-center justify-center p-2 ">
+    <main className=" min-h-screen flex flex-col items-center justify-center p-2 ">
       <div className=" items-center space-y-6 w-full max-w-md ">
         <div className="  w-full text-left ">
           <h1 className=" font-semibold text-2xl ">Criar conta</h1>

@@ -12,6 +12,7 @@ import { Route as rootRouteImport } from './routes/@__root'
 import { Route as PublicLayoutRouteImport } from './routes/@_public/@layout'
 import { Route as PrivateLayoutRouteImport } from './routes/@_private/@layout'
 import { Route as PageRouteImport } from './routes/@page'
+import { Route as PublicAuthLayoutRouteImport } from './routes/@_public/@auth/@layout'
 import { Route as PublicMenuPageRouteImport } from './routes/@_public/@menu/@page'
 import { Route as PrivateHomePageRouteImport } from './routes/@_private/@home/@page'
 import { Route as PublicAuthVerificationPageRouteImport } from './routes/@_public/@auth/@verification/@page'
@@ -32,6 +33,11 @@ const PageRoute = PageRouteImport.update({
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const PublicAuthLayoutRoute = PublicAuthLayoutRouteImport.update({
+  id: '/auth',
+  path: '/auth',
+  getParentRoute: () => PublicLayoutRoute,
+} as any)
 const PublicMenuPageRoute = PublicMenuPageRouteImport.update({
   id: '/menu/',
   path: '/menu/',
@@ -44,29 +50,30 @@ const PrivateHomePageRoute = PrivateHomePageRouteImport.update({
 } as any)
 const PublicAuthVerificationPageRoute =
   PublicAuthVerificationPageRouteImport.update({
-    id: '/auth/verification/',
-    path: '/auth/verification/',
-    getParentRoute: () => PublicLayoutRoute,
+    id: '/verification/',
+    path: '/verification/',
+    getParentRoute: () => PublicAuthLayoutRoute,
   } as any)
 const PublicAuthSignUpPageRoute = PublicAuthSignUpPageRouteImport.update({
-  id: '/auth/sign-up/',
-  path: '/auth/sign-up/',
-  getParentRoute: () => PublicLayoutRoute,
+  id: '/sign-up/',
+  path: '/sign-up/',
+  getParentRoute: () => PublicAuthLayoutRoute,
 } as any)
 const PublicAuthSignInPageRoute = PublicAuthSignInPageRouteImport.update({
-  id: '/auth/sign-in/',
-  path: '/auth/sign-in/',
-  getParentRoute: () => PublicLayoutRoute,
+  id: '/sign-in/',
+  path: '/sign-in/',
+  getParentRoute: () => PublicAuthLayoutRoute,
 } as any)
 const PublicAuthForgotPasswordPageRoute =
   PublicAuthForgotPasswordPageRouteImport.update({
-    id: '/auth/forgot-password/',
-    path: '/auth/forgot-password/',
-    getParentRoute: () => PublicLayoutRoute,
+    id: '/forgot-password/',
+    path: '/forgot-password/',
+    getParentRoute: () => PublicAuthLayoutRoute,
   } as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof PageRoute
+  '/auth': typeof PublicAuthLayoutRouteWithChildren
   '/home/': typeof PrivateHomePageRoute
   '/menu/': typeof PublicMenuPageRoute
   '/auth/forgot-password/': typeof PublicAuthForgotPasswordPageRoute
@@ -76,6 +83,7 @@ export interface FileRoutesByFullPath {
 }
 export interface FileRoutesByTo {
   '/': typeof PageRoute
+  '/auth': typeof PublicAuthLayoutRouteWithChildren
   '/home': typeof PrivateHomePageRoute
   '/menu': typeof PublicMenuPageRoute
   '/auth/forgot-password': typeof PublicAuthForgotPasswordPageRoute
@@ -88,6 +96,7 @@ export interface FileRoutesById {
   '/': typeof PageRoute
   '/_private': typeof PrivateLayoutRouteWithChildren
   '/_public': typeof PublicLayoutRouteWithChildren
+  '/_public/auth': typeof PublicAuthLayoutRouteWithChildren
   '/_private/home/': typeof PrivateHomePageRoute
   '/_public/menu/': typeof PublicMenuPageRoute
   '/_public/auth/forgot-password/': typeof PublicAuthForgotPasswordPageRoute
@@ -99,6 +108,7 @@ export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
     | '/'
+    | '/auth'
     | '/home/'
     | '/menu/'
     | '/auth/forgot-password/'
@@ -108,6 +118,7 @@ export interface FileRouteTypes {
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
+    | '/auth'
     | '/home'
     | '/menu'
     | '/auth/forgot-password'
@@ -119,6 +130,7 @@ export interface FileRouteTypes {
     | '/'
     | '/_private'
     | '/_public'
+    | '/_public/auth'
     | '/_private/home/'
     | '/_public/menu/'
     | '/_public/auth/forgot-password/'
@@ -156,6 +168,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof PageRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/_public/auth': {
+      id: '/_public/auth'
+      path: '/auth'
+      fullPath: '/auth'
+      preLoaderRoute: typeof PublicAuthLayoutRouteImport
+      parentRoute: typeof PublicLayoutRoute
+    }
     '/_public/menu/': {
       id: '/_public/menu/'
       path: '/menu'
@@ -172,31 +191,31 @@ declare module '@tanstack/react-router' {
     }
     '/_public/auth/verification/': {
       id: '/_public/auth/verification/'
-      path: '/auth/verification'
+      path: '/verification'
       fullPath: '/auth/verification/'
       preLoaderRoute: typeof PublicAuthVerificationPageRouteImport
-      parentRoute: typeof PublicLayoutRoute
+      parentRoute: typeof PublicAuthLayoutRoute
     }
     '/_public/auth/sign-up/': {
       id: '/_public/auth/sign-up/'
-      path: '/auth/sign-up'
+      path: '/sign-up'
       fullPath: '/auth/sign-up/'
       preLoaderRoute: typeof PublicAuthSignUpPageRouteImport
-      parentRoute: typeof PublicLayoutRoute
+      parentRoute: typeof PublicAuthLayoutRoute
     }
     '/_public/auth/sign-in/': {
       id: '/_public/auth/sign-in/'
-      path: '/auth/sign-in'
+      path: '/sign-in'
       fullPath: '/auth/sign-in/'
       preLoaderRoute: typeof PublicAuthSignInPageRouteImport
-      parentRoute: typeof PublicLayoutRoute
+      parentRoute: typeof PublicAuthLayoutRoute
     }
     '/_public/auth/forgot-password/': {
       id: '/_public/auth/forgot-password/'
-      path: '/auth/forgot-password'
+      path: '/forgot-password'
       fullPath: '/auth/forgot-password/'
       preLoaderRoute: typeof PublicAuthForgotPasswordPageRouteImport
-      parentRoute: typeof PublicLayoutRoute
+      parentRoute: typeof PublicAuthLayoutRoute
     }
   }
 }
@@ -213,20 +232,31 @@ const PrivateLayoutRouteWithChildren = PrivateLayoutRoute._addFileChildren(
   PrivateLayoutRouteChildren,
 )
 
-interface PublicLayoutRouteChildren {
-  PublicMenuPageRoute: typeof PublicMenuPageRoute
+interface PublicAuthLayoutRouteChildren {
   PublicAuthForgotPasswordPageRoute: typeof PublicAuthForgotPasswordPageRoute
   PublicAuthSignInPageRoute: typeof PublicAuthSignInPageRoute
   PublicAuthSignUpPageRoute: typeof PublicAuthSignUpPageRoute
   PublicAuthVerificationPageRoute: typeof PublicAuthVerificationPageRoute
 }
 
-const PublicLayoutRouteChildren: PublicLayoutRouteChildren = {
-  PublicMenuPageRoute: PublicMenuPageRoute,
+const PublicAuthLayoutRouteChildren: PublicAuthLayoutRouteChildren = {
   PublicAuthForgotPasswordPageRoute: PublicAuthForgotPasswordPageRoute,
   PublicAuthSignInPageRoute: PublicAuthSignInPageRoute,
   PublicAuthSignUpPageRoute: PublicAuthSignUpPageRoute,
   PublicAuthVerificationPageRoute: PublicAuthVerificationPageRoute,
+}
+
+const PublicAuthLayoutRouteWithChildren =
+  PublicAuthLayoutRoute._addFileChildren(PublicAuthLayoutRouteChildren)
+
+interface PublicLayoutRouteChildren {
+  PublicAuthLayoutRoute: typeof PublicAuthLayoutRouteWithChildren
+  PublicMenuPageRoute: typeof PublicMenuPageRoute
+}
+
+const PublicLayoutRouteChildren: PublicLayoutRouteChildren = {
+  PublicAuthLayoutRoute: PublicAuthLayoutRouteWithChildren,
+  PublicMenuPageRoute: PublicMenuPageRoute,
 }
 
 const PublicLayoutRouteWithChildren = PublicLayoutRoute._addFileChildren(

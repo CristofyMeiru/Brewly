@@ -14,7 +14,7 @@ export const Route = createFileRoute("/_public/auth/sign-in/")({
 
 function RouteComponent() {
   return (
-    <main className="  flex flex-col items-center justify-center p-2 ">
+    <main className=" flex flex-col items-center  p-2 ">
       <div className=" items-center space-y-6 w-full max-w-md ">
         <div className="  w-full text-left ">
           <h1 className=" font-semibold text-2xl ">Entrar</h1>
