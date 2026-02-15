@@ -12,6 +12,7 @@ import { Route as rootRouteImport } from './routes/@__root'
 import { Route as PublicLayoutRouteImport } from './routes/@_public/@layout'
 import { Route as PrivateLayoutRouteImport } from './routes/@_private/@layout'
 import { Route as PageRouteImport } from './routes/@page'
+import { Route as PublicMenuPageRouteImport } from './routes/@_public/@menu/@page'
 import { Route as PrivateHomePageRouteImport } from './routes/@_private/@home/@page'
 import { Route as PublicAuthVerificationPageRouteImport } from './routes/@_public/@auth/@verification/@page'
 import { Route as PublicAuthSignUpPageRouteImport } from './routes/@_public/@auth/@sign-up/@page'
@@ -30,6 +31,11 @@ const PageRoute = PageRouteImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => rootRouteImport,
+} as any)
+const PublicMenuPageRoute = PublicMenuPageRouteImport.update({
+  id: '/menu/',
+  path: '/menu/',
+  getParentRoute: () => PublicLayoutRoute,
 } as any)
 const PrivateHomePageRoute = PrivateHomePageRouteImport.update({
   id: '/home/',
@@ -62,6 +68,7 @@ const PublicAuthForgotPasswordPageRoute =
 export interface FileRoutesByFullPath {
   '/': typeof PageRoute
   '/home/': typeof PrivateHomePageRoute
+  '/menu/': typeof PublicMenuPageRoute
   '/auth/forgot-password/': typeof PublicAuthForgotPasswordPageRoute
   '/auth/sign-in/': typeof PublicAuthSignInPageRoute
   '/auth/sign-up/': typeof PublicAuthSignUpPageRoute
@@ -70,6 +77,7 @@ export interface FileRoutesByFullPath {
 export interface FileRoutesByTo {
   '/': typeof PageRoute
   '/home': typeof PrivateHomePageRoute
+  '/menu': typeof PublicMenuPageRoute
   '/auth/forgot-password': typeof PublicAuthForgotPasswordPageRoute
   '/auth/sign-in': typeof PublicAuthSignInPageRoute
   '/auth/sign-up': typeof PublicAuthSignUpPageRoute
@@ -81,6 +89,7 @@ export interface FileRoutesById {
   '/_private': typeof PrivateLayoutRouteWithChildren
   '/_public': typeof PublicLayoutRouteWithChildren
   '/_private/home/': typeof PrivateHomePageRoute
+  '/_public/menu/': typeof PublicMenuPageRoute
   '/_public/auth/forgot-password/': typeof PublicAuthForgotPasswordPageRoute
   '/_public/auth/sign-in/': typeof PublicAuthSignInPageRoute
   '/_public/auth/sign-up/': typeof PublicAuthSignUpPageRoute
@@ -91,6 +100,7 @@ export interface FileRouteTypes {
   fullPaths:
     | '/'
     | '/home/'
+    | '/menu/'
     | '/auth/forgot-password/'
     | '/auth/sign-in/'
     | '/auth/sign-up/'
@@ -99,6 +109,7 @@ export interface FileRouteTypes {
   to:
     | '/'
     | '/home'
+    | '/menu'
     | '/auth/forgot-password'
     | '/auth/sign-in'
     | '/auth/sign-up'
@@ -109,6 +120,7 @@ export interface FileRouteTypes {
     | '/_private'
     | '/_public'
     | '/_private/home/'
+    | '/_public/menu/'
     | '/_public/auth/forgot-password/'
     | '/_public/auth/sign-in/'
     | '/_public/auth/sign-up/'
@@ -143,6 +155,13 @@ declare module '@tanstack/react-router' {
       fullPath: '/'
       preLoaderRoute: typeof PageRouteImport
       parentRoute: typeof rootRouteImport
+    }
+    '/_public/menu/': {
+      id: '/_public/menu/'
+      path: '/menu'
+      fullPath: '/menu/'
+      preLoaderRoute: typeof PublicMenuPageRouteImport
+      parentRoute: typeof PublicLayoutRoute
     }
     '/_private/home/': {
       id: '/_private/home/'
@@ -195,6 +214,7 @@ const PrivateLayoutRouteWithChildren = PrivateLayoutRoute._addFileChildren(
 )
 
 interface PublicLayoutRouteChildren {
+  PublicMenuPageRoute: typeof PublicMenuPageRoute
   PublicAuthForgotPasswordPageRoute: typeof PublicAuthForgotPasswordPageRoute
   PublicAuthSignInPageRoute: typeof PublicAuthSignInPageRoute
   PublicAuthSignUpPageRoute: typeof PublicAuthSignUpPageRoute
@@ -202,6 +222,7 @@ interface PublicLayoutRouteChildren {
 }
 
 const PublicLayoutRouteChildren: PublicLayoutRouteChildren = {
+  PublicMenuPageRoute: PublicMenuPageRoute,
   PublicAuthForgotPasswordPageRoute: PublicAuthForgotPasswordPageRoute,
   PublicAuthSignInPageRoute: PublicAuthSignInPageRoute,
   PublicAuthSignUpPageRoute: PublicAuthSignUpPageRoute,

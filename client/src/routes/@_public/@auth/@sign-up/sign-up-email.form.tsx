@@ -1,7 +1,8 @@
 import { Button } from "@/components/ui/button";
 import { Field, FieldError, FieldLabel } from "@/components/ui/field";
 import { InputGroup, InputGroupAddon, InputGroupButton, InputGroupInput } from "@/components/ui/input-group";
-import { IconEye, IconEyeClosed, IconLoader2, IconLock, IconMail, IconUser, IconUserPlus } from "@tabler/icons-react";
+import { Spinner } from "@/components/ui/spinner";
+import { IconEye, IconEyeClosed, IconLock, IconMail, IconUser, IconUserPlus } from "@tabler/icons-react";
 import { useForm } from "@tanstack/react-form";
 import { useState } from "react";
 import { SignUpEmailSchema, type SignUpEmail } from "./sign-up-email.schema";
@@ -167,7 +168,7 @@ export default function SignUpEmailForm() {
           <Button type="submit" className="w-full" disabled={!canSubmit || isSubmitting}>
             {isSubmitting ? (
               <>
-                <IconLoader2 className="mr-2 h-4 w-4 animate-spin" />
+                <Spinner />
               </>
             ) : (
               <>

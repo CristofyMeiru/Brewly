@@ -8,7 +8,7 @@ export const Route = createFileRoute("/")({
 
 function RouteComponent() {
   return (
-    <div className="min-h-screen bg-zinc-50 text-white">
+    <div className="min-h-screen ">
       <section className="flex flex-col items-center justify-center text-center px-6 py-12">
         <img src="/brewly-logo.png" alt="Brewly Logo" className="w-50 mb-6" />
 
@@ -35,7 +35,7 @@ function RouteComponent() {
         </div>
       </section>
 
-      <section className="px-6 py-20 bg-zinc-900">
+      <section className="px-6 py-20 bg-zinc-900 text-white">
         <div className="max-w-5xl mx-auto grid md:grid-cols-3 gap-10 text-center">
           <div className="space-y-4">
             <IconCoffee size={40} className="mx-auto text-amber-500" />
@@ -57,9 +57,8 @@ function RouteComponent() {
         </div>
       </section>
 
-      {/* CTA FINAL */}
       <section className="px-6 py-20 text-center">
-        <h2 className="text-3xl font-bold">Pronto para seu próximo café?</h2>
+        <h2 className="text-3xl font-bold ">Pronto para seu próximo café?</h2>
 
         <div className="mt-6">
           <Link to="/">
