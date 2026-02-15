@@ -10,22 +10,25 @@
 
 import { Route as rootRouteImport } from './routes/@__root'
 import { Route as PublicLayoutRouteImport } from './routes/@_public/@layout'
-import { Route as PrivateLayoutRouteImport } from './routes/@_private/@layout'
+import { Route as AppLayoutRouteImport } from './routes/@_app/@layout'
 import { Route as PageRouteImport } from './routes/@page'
 import { Route as PublicAuthLayoutRouteImport } from './routes/@_public/@auth/@layout'
-import { Route as PublicMenuPageRouteImport } from './routes/@_public/@menu/@page'
-import { Route as PrivateHomePageRouteImport } from './routes/@_private/@home/@page'
+import { Route as AppPrivateLayoutRouteImport } from './routes/@_app/@_private/@layout'
+import { Route as AppProfilePageRouteImport } from './routes/@_app/@profile/@page'
+import { Route as AppMenuPageRouteImport } from './routes/@_app/@menu/@page'
 import { Route as PublicAuthVerificationPageRouteImport } from './routes/@_public/@auth/@verification/@page'
 import { Route as PublicAuthSignUpPageRouteImport } from './routes/@_public/@auth/@sign-up/@page'
 import { Route as PublicAuthSignInPageRouteImport } from './routes/@_public/@auth/@sign-in/@page'
 import { Route as PublicAuthForgotPasswordPageRouteImport } from './routes/@_public/@auth/@forgot-password/@page'
+import { Route as AppPrivateHomePageRouteImport } from './routes/@_app/@_private/@home/@page'
+import { Route as AppPrivateCartPageRouteImport } from './routes/@_app/@_private/@cart/@page'
 
 const PublicLayoutRoute = PublicLayoutRouteImport.update({
   id: '/_public',
   getParentRoute: () => rootRouteImport,
 } as any)
-const PrivateLayoutRoute = PrivateLayoutRouteImport.update({
-  id: '/_private',
+const AppLayoutRoute = AppLayoutRouteImport.update({
+  id: '/_app',
   getParentRoute: () => rootRouteImport,
 } as any)
 const PageRoute = PageRouteImport.update({
@@ -38,15 +41,19 @@ const PublicAuthLayoutRoute = PublicAuthLayoutRouteImport.update({
   path: '/auth',
   getParentRoute: () => PublicLayoutRoute,
 } as any)
-const PublicMenuPageRoute = PublicMenuPageRouteImport.update({
+const AppPrivateLayoutRoute = AppPrivateLayoutRouteImport.update({
+  id: '/_private',
+  getParentRoute: () => AppLayoutRoute,
+} as any)
+const AppProfilePageRoute = AppProfilePageRouteImport.update({
+  id: '/profile/',
+  path: '/profile/',
+  getParentRoute: () => AppLayoutRoute,
+} as any)
+const AppMenuPageRoute = AppMenuPageRouteImport.update({
   id: '/menu/',
   path: '/menu/',
-  getParentRoute: () => PublicLayoutRoute,
-} as any)
-const PrivateHomePageRoute = PrivateHomePageRouteImport.update({
-  id: '/home/',
-  path: '/home/',
-  getParentRoute: () => PrivateLayoutRoute,
+  getParentRoute: () => AppLayoutRoute,
 } as any)
 const PublicAuthVerificationPageRoute =
   PublicAuthVerificationPageRouteImport.update({
@@ -70,12 +77,24 @@ const PublicAuthForgotPasswordPageRoute =
     path: '/forgot-password/',
     getParentRoute: () => PublicAuthLayoutRoute,
   } as any)
+const AppPrivateHomePageRoute = AppPrivateHomePageRouteImport.update({
+  id: '/home/',
+  path: '/home/',
+  getParentRoute: () => AppPrivateLayoutRoute,
+} as any)
+const AppPrivateCartPageRoute = AppPrivateCartPageRouteImport.update({
+  id: '/cart/',
+  path: '/cart/',
+  getParentRoute: () => AppPrivateLayoutRoute,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof PageRoute
   '/auth': typeof PublicAuthLayoutRouteWithChildren
-  '/home/': typeof PrivateHomePageRoute
-  '/menu/': typeof PublicMenuPageRoute
+  '/menu/': typeof AppMenuPageRoute
+  '/profile/': typeof AppProfilePageRoute
+  '/cart/': typeof AppPrivateCartPageRoute
+  '/home/': typeof AppPrivateHomePageRoute
   '/auth/forgot-password/': typeof PublicAuthForgotPasswordPageRoute
   '/auth/sign-in/': typeof PublicAuthSignInPageRoute
   '/auth/sign-up/': typeof PublicAuthSignUpPageRoute
@@ -84,8 +103,10 @@ export interface FileRoutesByFullPath {
 export interface FileRoutesByTo {
   '/': typeof PageRoute
   '/auth': typeof PublicAuthLayoutRouteWithChildren
-  '/home': typeof PrivateHomePageRoute
-  '/menu': typeof PublicMenuPageRoute
+  '/menu': typeof AppMenuPageRoute
+  '/profile': typeof AppProfilePageRoute
+  '/cart': typeof AppPrivateCartPageRoute
+  '/home': typeof AppPrivateHomePageRoute
   '/auth/forgot-password': typeof PublicAuthForgotPasswordPageRoute
   '/auth/sign-in': typeof PublicAuthSignInPageRoute
   '/auth/sign-up': typeof PublicAuthSignUpPageRoute
@@ -94,11 +115,14 @@ export interface FileRoutesByTo {
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof PageRoute
-  '/_private': typeof PrivateLayoutRouteWithChildren
+  '/_app': typeof AppLayoutRouteWithChildren
   '/_public': typeof PublicLayoutRouteWithChildren
+  '/_app/_private': typeof AppPrivateLayoutRouteWithChildren
   '/_public/auth': typeof PublicAuthLayoutRouteWithChildren
-  '/_private/home/': typeof PrivateHomePageRoute
-  '/_public/menu/': typeof PublicMenuPageRoute
+  '/_app/menu/': typeof AppMenuPageRoute
+  '/_app/profile/': typeof AppProfilePageRoute
+  '/_app/_private/cart/': typeof AppPrivateCartPageRoute
+  '/_app/_private/home/': typeof AppPrivateHomePageRoute
   '/_public/auth/forgot-password/': typeof PublicAuthForgotPasswordPageRoute
   '/_public/auth/sign-in/': typeof PublicAuthSignInPageRoute
   '/_public/auth/sign-up/': typeof PublicAuthSignUpPageRoute
@@ -109,8 +133,10 @@ export interface FileRouteTypes {
   fullPaths:
     | '/'
     | '/auth'
-    | '/home/'
     | '/menu/'
+    | '/profile/'
+    | '/cart/'
+    | '/home/'
     | '/auth/forgot-password/'
     | '/auth/sign-in/'
     | '/auth/sign-up/'
@@ -119,8 +145,10 @@ export interface FileRouteTypes {
   to:
     | '/'
     | '/auth'
-    | '/home'
     | '/menu'
+    | '/profile'
+    | '/cart'
+    | '/home'
     | '/auth/forgot-password'
     | '/auth/sign-in'
     | '/auth/sign-up'
@@ -128,11 +156,14 @@ export interface FileRouteTypes {
   id:
     | '__root__'
     | '/'
-    | '/_private'
+    | '/_app'
     | '/_public'
+    | '/_app/_private'
     | '/_public/auth'
-    | '/_private/home/'
-    | '/_public/menu/'
+    | '/_app/menu/'
+    | '/_app/profile/'
+    | '/_app/_private/cart/'
+    | '/_app/_private/home/'
     | '/_public/auth/forgot-password/'
     | '/_public/auth/sign-in/'
     | '/_public/auth/sign-up/'
@@ -141,7 +172,7 @@ export interface FileRouteTypes {
 }
 export interface RootRouteChildren {
   PageRoute: typeof PageRoute
-  PrivateLayoutRoute: typeof PrivateLayoutRouteWithChildren
+  AppLayoutRoute: typeof AppLayoutRouteWithChildren
   PublicLayoutRoute: typeof PublicLayoutRouteWithChildren
 }
 
@@ -154,11 +185,11 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof PublicLayoutRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/_private': {
-      id: '/_private'
+    '/_app': {
+      id: '/_app'
       path: ''
       fullPath: '/'
-      preLoaderRoute: typeof PrivateLayoutRouteImport
+      preLoaderRoute: typeof AppLayoutRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/': {
@@ -175,19 +206,26 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof PublicAuthLayoutRouteImport
       parentRoute: typeof PublicLayoutRoute
     }
-    '/_public/menu/': {
-      id: '/_public/menu/'
+    '/_app/_private': {
+      id: '/_app/_private'
+      path: ''
+      fullPath: '/'
+      preLoaderRoute: typeof AppPrivateLayoutRouteImport
+      parentRoute: typeof AppLayoutRoute
+    }
+    '/_app/profile/': {
+      id: '/_app/profile/'
+      path: '/profile'
+      fullPath: '/profile/'
+      preLoaderRoute: typeof AppProfilePageRouteImport
+      parentRoute: typeof AppLayoutRoute
+    }
+    '/_app/menu/': {
+      id: '/_app/menu/'
       path: '/menu'
       fullPath: '/menu/'
-      preLoaderRoute: typeof PublicMenuPageRouteImport
-      parentRoute: typeof PublicLayoutRoute
-    }
-    '/_private/home/': {
-      id: '/_private/home/'
-      path: '/home'
-      fullPath: '/home/'
-      preLoaderRoute: typeof PrivateHomePageRouteImport
-      parentRoute: typeof PrivateLayoutRoute
+      preLoaderRoute: typeof AppMenuPageRouteImport
+      parentRoute: typeof AppLayoutRoute
     }
     '/_public/auth/verification/': {
       id: '/_public/auth/verification/'
@@ -217,19 +255,50 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof PublicAuthForgotPasswordPageRouteImport
       parentRoute: typeof PublicAuthLayoutRoute
     }
+    '/_app/_private/home/': {
+      id: '/_app/_private/home/'
+      path: '/home'
+      fullPath: '/home/'
+      preLoaderRoute: typeof AppPrivateHomePageRouteImport
+      parentRoute: typeof AppPrivateLayoutRoute
+    }
+    '/_app/_private/cart/': {
+      id: '/_app/_private/cart/'
+      path: '/cart'
+      fullPath: '/cart/'
+      preLoaderRoute: typeof AppPrivateCartPageRouteImport
+      parentRoute: typeof AppPrivateLayoutRoute
+    }
   }
 }
 
-interface PrivateLayoutRouteChildren {
-  PrivateHomePageRoute: typeof PrivateHomePageRoute
+interface AppPrivateLayoutRouteChildren {
+  AppPrivateCartPageRoute: typeof AppPrivateCartPageRoute
+  AppPrivateHomePageRoute: typeof AppPrivateHomePageRoute
 }
 
-const PrivateLayoutRouteChildren: PrivateLayoutRouteChildren = {
-  PrivateHomePageRoute: PrivateHomePageRoute,
+const AppPrivateLayoutRouteChildren: AppPrivateLayoutRouteChildren = {
+  AppPrivateCartPageRoute: AppPrivateCartPageRoute,
+  AppPrivateHomePageRoute: AppPrivateHomePageRoute,
 }
 
-const PrivateLayoutRouteWithChildren = PrivateLayoutRoute._addFileChildren(
-  PrivateLayoutRouteChildren,
+const AppPrivateLayoutRouteWithChildren =
+  AppPrivateLayoutRoute._addFileChildren(AppPrivateLayoutRouteChildren)
+
+interface AppLayoutRouteChildren {
+  AppPrivateLayoutRoute: typeof AppPrivateLayoutRouteWithChildren
+  AppMenuPageRoute: typeof AppMenuPageRoute
+  AppProfilePageRoute: typeof AppProfilePageRoute
+}
+
+const AppLayoutRouteChildren: AppLayoutRouteChildren = {
+  AppPrivateLayoutRoute: AppPrivateLayoutRouteWithChildren,
+  AppMenuPageRoute: AppMenuPageRoute,
+  AppProfilePageRoute: AppProfilePageRoute,
+}
+
+const AppLayoutRouteWithChildren = AppLayoutRoute._addFileChildren(
+  AppLayoutRouteChildren,
 )
 
 interface PublicAuthLayoutRouteChildren {
@@ -251,12 +320,10 @@ const PublicAuthLayoutRouteWithChildren =
 
 interface PublicLayoutRouteChildren {
   PublicAuthLayoutRoute: typeof PublicAuthLayoutRouteWithChildren
-  PublicMenuPageRoute: typeof PublicMenuPageRoute
 }
 
 const PublicLayoutRouteChildren: PublicLayoutRouteChildren = {
   PublicAuthLayoutRoute: PublicAuthLayoutRouteWithChildren,
-  PublicMenuPageRoute: PublicMenuPageRoute,
 }
 
 const PublicLayoutRouteWithChildren = PublicLayoutRoute._addFileChildren(
@@ -265,7 +332,7 @@ const PublicLayoutRouteWithChildren = PublicLayoutRoute._addFileChildren(
 
 const rootRouteChildren: RootRouteChildren = {
   PageRoute: PageRoute,
-  PrivateLayoutRoute: PrivateLayoutRouteWithChildren,
+  AppLayoutRoute: AppLayoutRouteWithChildren,
   PublicLayoutRoute: PublicLayoutRouteWithChildren,
 }
 export const routeTree = rootRouteImport

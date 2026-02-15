@@ -1,7 +1,7 @@
 import { createFileRoute, Outlet } from "@tanstack/react-router";
 import React from "react";
 
-export const Route = createFileRoute("/_private")({
+export const Route = createFileRoute("/_app/_private")({
   component: RouteComponent,
 });
 

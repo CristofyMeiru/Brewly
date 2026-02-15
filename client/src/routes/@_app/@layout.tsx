@@ -1,7 +1,8 @@
 import { createFileRoute, Outlet } from "@tanstack/react-router";
 import React from "react";
+import { TabNavigator } from "./tab-navigator";
 
-export const Route = createFileRoute("/_public")({
+export const Route = createFileRoute("/_app")({
   component: RouteComponent,
 });
 
@@ -9,9 +10,7 @@ function RouteComponent() {
   return (
     <React.Fragment>
       <Outlet />
-      <footer className="text-center text-sm text-zinc-500 py-8 border-t ">
-        © {new Date().getFullYear()} Brewly. Todos os direitos reservados.
-      </footer>
+      <TabNavigator />
     </React.Fragment>
   );
 }

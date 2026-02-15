@@ -19,14 +19,14 @@ function RouteComponent() {
         </p>
 
         <div className="flex gap-4 mt-8">
-          <Link to="/">
+          <Link to="/menu">
             <Button size="lg" className="gap-2">
               <IconMenu2 size={18} />
               Ver Menu
             </Button>
           </Link>
 
-          <Link to="/">
+          <Link to="/menu">
             <Button size="lg" variant="secondary" className="gap-2">
               <IconShoppingCart size={18} />
               Fazer Pedido

@@ -18,10 +18,6 @@ function RootComponent() {
         <Outlet />
       </div>
 
-      <footer className="text-center text-sm text-zinc-500 py-8 border-t border-zinc-800">
-        © {new Date().getFullYear()} Brewly. Todos os direitos reservados.
-      </footer>
-
       <Scripts />
       <TanStackRouterDevtools />
     </div>
