@@ -14,6 +14,7 @@ import { Route as AppLayoutRouteImport } from './routes/@_app/@layout'
 import { Route as PageRouteImport } from './routes/@page'
 import { Route as PublicAuthLayoutRouteImport } from './routes/@_public/@auth/@layout'
 import { Route as AppPrivateLayoutRouteImport } from './routes/@_app/@_private/@layout'
+import { Route as AppAdminLayoutRouteImport } from './routes/@_app/@_admin/@layout'
 import { Route as AppProfilePageRouteImport } from './routes/@_app/@profile/@page'
 import { Route as AppMenuPageRouteImport } from './routes/@_app/@menu/@page'
 import { Route as PublicAuthVerificationPageRouteImport } from './routes/@_public/@auth/@verification/@page'
@@ -22,6 +23,7 @@ import { Route as PublicAuthSignInPageRouteImport } from './routes/@_public/@aut
 import { Route as PublicAuthForgotPasswordPageRouteImport } from './routes/@_public/@auth/@forgot-password/@page'
 import { Route as AppPrivateHomePageRouteImport } from './routes/@_app/@_private/@home/@page'
 import { Route as AppPrivateCartPageRouteImport } from './routes/@_app/@_private/@cart/@page'
+import { Route as AppAdminManagePageRouteImport } from './routes/@_app/@_admin/@manage/@page'
 
 const PublicLayoutRoute = PublicLayoutRouteImport.update({
   id: '/_public',
@@ -43,6 +45,10 @@ const PublicAuthLayoutRoute = PublicAuthLayoutRouteImport.update({
 } as any)
 const AppPrivateLayoutRoute = AppPrivateLayoutRouteImport.update({
   id: '/_private',
+  getParentRoute: () => AppLayoutRoute,
+} as any)
+const AppAdminLayoutRoute = AppAdminLayoutRouteImport.update({
+  id: '/_admin',
   getParentRoute: () => AppLayoutRoute,
 } as any)
 const AppProfilePageRoute = AppProfilePageRouteImport.update({
@@ -87,12 +93,18 @@ const AppPrivateCartPageRoute = AppPrivateCartPageRouteImport.update({
   path: '/cart/',
   getParentRoute: () => AppPrivateLayoutRoute,
 } as any)
+const AppAdminManagePageRoute = AppAdminManagePageRouteImport.update({
+  id: '/manage/',
+  path: '/manage/',
+  getParentRoute: () => AppAdminLayoutRoute,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof PageRoute
   '/auth': typeof PublicAuthLayoutRouteWithChildren
   '/menu/': typeof AppMenuPageRoute
   '/profile/': typeof AppProfilePageRoute
+  '/manage/': typeof AppAdminManagePageRoute
   '/cart/': typeof AppPrivateCartPageRoute
   '/home/': typeof AppPrivateHomePageRoute
   '/auth/forgot-password/': typeof PublicAuthForgotPasswordPageRoute
@@ -105,6 +117,7 @@ export interface FileRoutesByTo {
   '/auth': typeof PublicAuthLayoutRouteWithChildren
   '/menu': typeof AppMenuPageRoute
   '/profile': typeof AppProfilePageRoute
+  '/manage': typeof AppAdminManagePageRoute
   '/cart': typeof AppPrivateCartPageRoute
   '/home': typeof AppPrivateHomePageRoute
   '/auth/forgot-password': typeof PublicAuthForgotPasswordPageRoute
@@ -117,10 +130,12 @@ export interface FileRoutesById {
   '/': typeof PageRoute
   '/_app': typeof AppLayoutRouteWithChildren
   '/_public': typeof PublicLayoutRouteWithChildren
+  '/_app/_admin': typeof AppAdminLayoutRouteWithChildren
   '/_app/_private': typeof AppPrivateLayoutRouteWithChildren
   '/_public/auth': typeof PublicAuthLayoutRouteWithChildren
   '/_app/menu/': typeof AppMenuPageRoute
   '/_app/profile/': typeof AppProfilePageRoute
+  '/_app/_admin/manage/': typeof AppAdminManagePageRoute
   '/_app/_private/cart/': typeof AppPrivateCartPageRoute
   '/_app/_private/home/': typeof AppPrivateHomePageRoute
   '/_public/auth/forgot-password/': typeof PublicAuthForgotPasswordPageRoute
@@ -135,6 +150,7 @@ export interface FileRouteTypes {
     | '/auth'
     | '/menu/'
     | '/profile/'
+    | '/manage/'
     | '/cart/'
     | '/home/'
     | '/auth/forgot-password/'
@@ -147,6 +163,7 @@ export interface FileRouteTypes {
     | '/auth'
     | '/menu'
     | '/profile'
+    | '/manage'
     | '/cart'
     | '/home'
     | '/auth/forgot-password'
@@ -158,10 +175,12 @@ export interface FileRouteTypes {
     | '/'
     | '/_app'
     | '/_public'
+    | '/_app/_admin'
     | '/_app/_private'
     | '/_public/auth'
     | '/_app/menu/'
     | '/_app/profile/'
+    | '/_app/_admin/manage/'
     | '/_app/_private/cart/'
     | '/_app/_private/home/'
     | '/_public/auth/forgot-password/'
@@ -211,6 +230,13 @@ declare module '@tanstack/react-router' {
       path: ''
       fullPath: '/'
       preLoaderRoute: typeof AppPrivateLayoutRouteImport
+      parentRoute: typeof AppLayoutRoute
+    }
+    '/_app/_admin': {
+      id: '/_app/_admin'
+      path: ''
+      fullPath: '/'
+      preLoaderRoute: typeof AppAdminLayoutRouteImport
       parentRoute: typeof AppLayoutRoute
     }
     '/_app/profile/': {
@@ -269,8 +295,27 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AppPrivateCartPageRouteImport
       parentRoute: typeof AppPrivateLayoutRoute
     }
+    '/_app/_admin/manage/': {
+      id: '/_app/_admin/manage/'
+      path: '/manage'
+      fullPath: '/manage/'
+      preLoaderRoute: typeof AppAdminManagePageRouteImport
+      parentRoute: typeof AppAdminLayoutRoute
+    }
   }
 }
+
+interface AppAdminLayoutRouteChildren {
+  AppAdminManagePageRoute: typeof AppAdminManagePageRoute
+}
+
+const AppAdminLayoutRouteChildren: AppAdminLayoutRouteChildren = {
+  AppAdminManagePageRoute: AppAdminManagePageRoute,
+}
+
+const AppAdminLayoutRouteWithChildren = AppAdminLayoutRoute._addFileChildren(
+  AppAdminLayoutRouteChildren,
+)
 
 interface AppPrivateLayoutRouteChildren {
   AppPrivateCartPageRoute: typeof AppPrivateCartPageRoute
@@ -286,12 +331,14 @@ const AppPrivateLayoutRouteWithChildren =
   AppPrivateLayoutRoute._addFileChildren(AppPrivateLayoutRouteChildren)
 
 interface AppLayoutRouteChildren {
+  AppAdminLayoutRoute: typeof AppAdminLayoutRouteWithChildren
   AppPrivateLayoutRoute: typeof AppPrivateLayoutRouteWithChildren
   AppMenuPageRoute: typeof AppMenuPageRoute
   AppProfilePageRoute: typeof AppProfilePageRoute
 }
 
 const AppLayoutRouteChildren: AppLayoutRouteChildren = {
+  AppAdminLayoutRoute: AppAdminLayoutRouteWithChildren,
   AppPrivateLayoutRoute: AppPrivateLayoutRouteWithChildren,
   AppMenuPageRoute: AppMenuPageRoute,
   AppProfilePageRoute: AppProfilePageRoute,

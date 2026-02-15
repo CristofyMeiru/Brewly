@@ -8,11 +8,14 @@ import { useForm } from "@tanstack/react-form";
 import { Link } from "@tanstack/react-router";
 import React, { useState } from "react";
 import { signInEmailSchema, type SignInEmail } from "./sign-in-email.schema";
+import { useSignInPageActions } from "./sign-in.actions";
 
 const defaultValues: SignInEmail = { email: "", password: "", rememberMe: false };
 
 export default function SignInEmailForm() {
   const [showPass, setShowPass] = useState<boolean>(false);
+
+  const { signInEmailMutation } = useSignInPageActions();
 
   const form = useForm({
     defaultValues,
@@ -20,7 +23,7 @@ export default function SignInEmailForm() {
       onChange: signInEmailSchema,
     },
     onSubmit: async ({ value }) => {
-      console.log("Enviando dados:", value);
+      signInEmailMutation.mutate(value);
     },
   });
 

@@ -1,5 +1,5 @@
 import { plainToClass } from 'class-transformer';
-import { IsEnum, IsInt, IsString, IsUrl, Max, Min, validateSync } from 'class-validator';
+import { IsEnum, IsInt, IsString, Max, Min, validateSync } from 'class-validator';
 
 export class EnvSchema {
   @IsInt()
@@ -15,7 +15,9 @@ export class EnvSchema {
   DATABASE_URL: string;
 
   @IsString()
-  @IsUrl()
+  CLIENT_ORIGIN: string;
+
+  @IsString()
   BETTER_AUTH_URL: string;
 
   @IsString()

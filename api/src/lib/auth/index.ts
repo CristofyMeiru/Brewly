@@ -22,4 +22,5 @@ export const auth = betterAuth({
   },
   user,
   plugins: [adminPlugin, openAPI({ path: '/docs' })],
+  trustedOrigins: [process.env.CLIENT_ORIGIN!],
 });
