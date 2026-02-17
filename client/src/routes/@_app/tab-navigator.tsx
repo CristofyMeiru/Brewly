@@ -1,54 +1,79 @@
 import type { ToPath } from "@/shared/@types/to-path.type";
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { IconCoffee, IconShoppingCart, IconUser } from "@tabler/icons-react";
-import { Link } from "@tanstack/react-router";
+import { IconCoffee, IconShoppingCart, IconUser, type IconProps } from "@tabler/icons-react";
+import { Link, useLocation } from "@tanstack/react-router";
+import type { ExoticComponent } from "react";
+import { useEffect, useRef, useState } from "react";
 
 type TabItem = {
   to: ToPath;
   label: string;
-  render: (avatarUrl: string) => React.ReactNode;
+  icon: ExoticComponent<IconProps>;
 };
 
 export function TabNavigator() {
+  const location = useLocation();
+  const [visible, setVisible] = useState(true);
+  const lastScrollY = useRef(0);
+
   const tabs: TabItem[] = [
-    {
-      to: "/menu",
-      label: "Menu",
-      render: () => <IconCoffee size={22} stroke={1.8} />,
-    },
-    {
-      to: "/cart",
-      label: "Pedido",
-      render: () => <IconShoppingCart size={22} stroke={1.8} />,
-    },
-    {
-      to: "/profile",
-      label: "Perfil",
-      render: (avatarUrl) => (
-        <Avatar className={`h-6 w-6 border `}>
-          <AvatarFallback className={"bg-zinc-800 text-zinc-400"}>
-            <IconUser />
-          </AvatarFallback>
-          <AvatarImage src={avatarUrl} />
-        </Avatar>
-      ),
-    },
+    { to: "/menu", label: "Menu", icon: IconCoffee },
+    { to: "/cart", label: "Pedido", icon: IconShoppingCart },
+    { to: "/profile", label: "Perfil", icon: IconUser },
   ];
 
+  useEffect(() => {
+    if (!location.pathname.startsWith("/menu")) {
+      setVisible(true);
+      return;
+    }
+
+    const handleScroll = () => {
+      const current = window.scrollY;
+
+      if (Math.abs(current - lastScrollY.current) < 10) return;
+
+      if (current > lastScrollY.current && current > 80) {
+        setVisible(false);
+      } else {
+        setVisible(true);
+      }
+
+      lastScrollY.current = current;
+    };
+
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, [location.pathname]);
+
   return (
-    <nav className="fixed bottom-0 left-0 right-0 border-t border-zinc-800 bg-zinc-950/95 backdrop-blur-md">
-      <div className="max-w-md mx-auto flex justify-around py-2">
-        {tabs.map((tab) => (
-          <Link
-            key={tab.to}
-            to={tab.to}
-            activeProps={{ className: "text-primary!" }}
-            className={" text-zinc-400 flex flex-col items-center text-xs transition-colors"}
-          >
-            {tab.render("")}
-            <span className="mt-1">{tab.label}</span>
-          </Link>
-        ))}
+    <nav
+      className={`
+        fixed bottom-4 left-1/2 -translate-x-1/2
+        w-[95%] max-w-md
+        rounded-2xl
+        border border-zinc-800
+        bg-zinc-950/90 backdrop-blur-xl
+        shadow-2xl shadow-black/40
+        transition-all duration-300 ease-out
+        ${visible ? "translate-y-0 opacity-100" : "translate-y-24 opacity-0"}
+      `}
+    >
+      <div className="flex justify-around py-3 text-zinc-400">
+        {tabs.map((tab) => {
+          const Icon = tab.icon;
+
+          return (
+            <Link
+              key={tab.to}
+              to={tab.to}
+              activeProps={{ className: "text-primary" }}
+              className="flex flex-col items-center text-xs transition-colors"
+            >
+              <Icon size={22} stroke={1.8} />
+              <span className="mt-1">{tab.label}</span>
+            </Link>
+          );
+        })}
       </div>
     </nav>
   );

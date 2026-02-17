@@ -1,5 +1,4 @@
 import { createFileRoute, Outlet } from "@tanstack/react-router";
-import React from "react";
 import { TabNavigator } from "./tab-navigator";
 
 export const Route = createFileRoute("/_app")({
@@ -8,9 +7,12 @@ export const Route = createFileRoute("/_app")({
 
 function RouteComponent() {
   return (
-    <React.Fragment>
-      <Outlet />
+    <div className="relative min-h-screen ">
+      <main className="pb-20">
+        <Outlet />
+      </main>
+
       <TabNavigator />
-    </React.Fragment>
+    </div>
   );
 }

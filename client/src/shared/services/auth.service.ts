@@ -1,6 +1,8 @@
 import { authClient } from "@/lib/auth-client";
+import type { AuthState } from "@/routes/@__root";
 import type { SignInEmail } from "@/routes/@_public/@auth/@sign-in/sign-in-email.schema";
 import type { SignUpEmail } from "@/routes/@_public/@auth/@sign-up/sign-up-email.schema";
+import type { BetterAuthError } from "better-auth";
 
 export const authService = {
   async signUp({ email, name, password }: SignUpEmail) {
@@ -19,5 +21,9 @@ export const authService = {
     const { data, error } = await authClient.signIn.social({ provider: "google" });
     if (error) throw error;
     return data;
+  },
+
+  async getSession() {
+    return (await authClient.getSession()) as unknown as { data: AuthState; error: BetterAuthError };
   },
 };
