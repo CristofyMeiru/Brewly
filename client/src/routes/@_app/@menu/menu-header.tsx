@@ -11,7 +11,7 @@ export function MenuHeader({ authState }: { authState: NonNullable<AuthState> })
     <div className=" w-full flex justify-between items-center py-7 px-2  ">
       <div>
         <h2 className=" text-sm leading-snug text-muted-foreground ">Bem vindo!</h2>
-        <h1></h1>
+        <h1>{authState.user.name.split(" ").slice(0, 2).join(" ")}</h1>
       </div>
       <section className=" flex items-center space-x-2 ">
         <Link to="/cart">
