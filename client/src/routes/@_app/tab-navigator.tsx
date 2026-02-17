@@ -1,5 +1,5 @@
 import type { ToPath } from "@/shared/@types/to-path.type";
-import { IconCoffee, IconGift, IconReceipt, type IconProps } from "@tabler/icons-react";
+import { IconCoffee, IconGiftFilled, IconReceiptFilled, type IconProps } from "@tabler/icons-react";
 import { Link, useLocation } from "@tanstack/react-router";
 import type { ExoticComponent } from "react";
 import { useEffect, useRef, useState } from "react";
@@ -17,8 +17,8 @@ export function TabNavigator() {
 
   const tabs: TabItem[] = [
     { to: "/menu", label: "Menu", icon: IconCoffee },
-    { to: "/rewards", label: "Prêmios", icon: IconGift },
-    { to: "/order", label: "Pedidos", icon: IconReceipt },
+    { to: "/rewards", label: "Prêmios", icon: IconGiftFilled },
+    { to: "/order", label: "Pedidos", icon: IconReceiptFilled },
   ];
 
   useEffect(() => {
@@ -49,14 +49,7 @@ export function TabNavigator() {
 
   return (
     <nav
-      className={`
-        fixed bottom-4 left-1/2 -translate-x-1/2
-        w-[95%] max-w-md
-        rounded-2xl
-        border border-zinc-800
-        bg-zinc-950/90 backdrop-blur-xl
-        shadow-2xl shadow-black/40
-        transition-all duration-300 ease-out
+      className={` fixed bottom-4 left-1/2 -translate-x-1/2 w-[95%] max-w-md rounded-2xl border border-border bg-card backdrop-blur-xl shadow-2xl shadow-black/40 transition-all duration-300 ease-out
         ${visible ? "translate-y-0 opacity-100" : "translate-y-24 opacity-0"}
       `}
     >

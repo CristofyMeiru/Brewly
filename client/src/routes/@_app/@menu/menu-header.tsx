@@ -2,7 +2,7 @@ import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Skeleton } from "@/components/ui/skeleton";
-import type { AuthState } from "@/routes/@__root";
+import type { AuthState } from "@/shared/@types/auth.types";
 import { IconShoppingCart, IconUser } from "@tabler/icons-react";
 import { Link } from "@tanstack/react-router";
 

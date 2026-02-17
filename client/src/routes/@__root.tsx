@@ -1,4 +1,5 @@
 import { APP_NAME } from "@/common/constants/metadata";
+import type { User } from "@/shared/@types/auth.types";
 import { authService } from "@/shared/services/auth.service";
 import { TanStackDevtools } from "@tanstack/react-devtools";
 import type { QueryClient } from "@tanstack/react-query";
@@ -6,12 +7,8 @@ import { ReactQueryDevtoolsPanel } from "@tanstack/react-query-devtools";
 import { HeadContent, Outlet, Scripts, createRootRouteWithContext, defer } from "@tanstack/react-router";
 import { TanStackRouterDevtoolsPanel } from "@tanstack/react-router-devtools";
 import type { Session } from "better-auth";
-import type { UserWithRole } from "better-auth/plugins";
 
-export type AuthState = {
-  session: Session;
-  user: UserWithRole;
-};
+
 
 interface RouterContext {
   queryClient: QueryClient;

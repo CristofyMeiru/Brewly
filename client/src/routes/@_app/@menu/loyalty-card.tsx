@@ -11,11 +11,13 @@ const MAX_LOYALTY = 8;
 
 export function LoyaltyCard({ total }: LoyaltyCardProps) {
   return (
-    <Item variant={"outline"} className=" bg-zinc-900 ">
+    <Item  className=" bg-card border border-border ">
       <ItemHeader className="flex items-center justify-between mb-3">
         <ItemContent>
-          <ItemTitle className=" text-zinc-200">Cartão Fidelidade</ItemTitle>
-          <ItemDescription className="text-xs text-zinc-400">A cada 8 cafés, o próximo é grátis ☕</ItemDescription>
+          <ItemTitle className=" text-zinc-900">Cartão Fidelidade</ItemTitle>
+          <ItemDescription className="text-xs text-muted-foreground">
+            A cada 8 cafés, o próximo é grátis ☕
+          </ItemDescription>
         </ItemContent>
         <span className="text-xs text-primary font-medium">
           {total}/{MAX_LOYALTY}
@@ -32,7 +34,7 @@ export function LoyaltyCard({ total }: LoyaltyCardProps) {
                 <div
                   key={index}
                   className={`flex flex-none items-center justify-center size-10 rounded-xl border transition-all
-              ${filled ? "bg-primary/20 border-primary text-primary" : "bg-zinc-900 border-zinc-800 text-zinc-700"}`}
+              ${filled ? "bg-primary/30 border-primary text-primary" : "bg-zinc-300 border-zinc-800 text-zinc-500"}`}
                 >
                   <IconCoffee size={20} stroke={1.5} />
                 </div>
@@ -40,7 +42,7 @@ export function LoyaltyCard({ total }: LoyaltyCardProps) {
             })}
           </div>
 
-          <ScrollBar className={"bg-zinc-800"} orientation="horizontal" />
+          <ScrollBar orientation="horizontal" />
         </ScrollArea>
       </ItemFooter>
     </Item>
@@ -49,21 +51,20 @@ export function LoyaltyCard({ total }: LoyaltyCardProps) {
 
 export function LoyaltyCardLoader() {
   return (
-    <Item variant={"outline"} className="bg-zinc-900 overflow-hidden">
+    <Item variant={"muted"} className=" border overflow-hidden">
       <ItemHeader className="flex items-center justify-between mb-3">
         <ItemContent>
-          <ItemTitle className="text-zinc-200">Cartão Fidelidade</ItemTitle>
+          <ItemTitle className="text-zinc-900">Cartão Fidelidade</ItemTitle>
           <ItemDescription className="text-xs text-zinc-400">A cada 8 cafés, o próximo é grátis ☕</ItemDescription>
         </ItemContent>
-        <Skeleton className="w-10 h-5 bg-zinc-800" />
+        <Skeleton className="w-10 h-5 " />
       </ItemHeader>
 
       <ItemFooter className="p-0">
-        
         <ScrollArea className="w-full">
           <div className="inline-flex space-x-3 pb-4 px-5">
             {Array.from({ length: MAX_LOYALTY }).map((_, index) => (
-              <Skeleton key={index} className="size-10 rounded-xl flex-none bg-zinc-800" />
+              <Skeleton key={index} className="size-10 rounded-xl flex-none " />
             ))}
           </div>
           <ScrollBar orientation="horizontal" />
@@ -72,4 +73,3 @@ export function LoyaltyCardLoader() {
     </Item>
   );
 }
-
