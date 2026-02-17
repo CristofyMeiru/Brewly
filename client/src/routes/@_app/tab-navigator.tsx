@@ -1,5 +1,5 @@
 import type { ToPath } from "@/shared/@types/to-path.type";
-import { IconCoffee, IconShoppingCart, IconUser, type IconProps } from "@tabler/icons-react";
+import { IconCoffee, IconGift, IconReceipt, type IconProps } from "@tabler/icons-react";
 import { Link, useLocation } from "@tanstack/react-router";
 import type { ExoticComponent } from "react";
 import { useEffect, useRef, useState } from "react";
@@ -17,14 +17,16 @@ export function TabNavigator() {
 
   const tabs: TabItem[] = [
     { to: "/menu", label: "Menu", icon: IconCoffee },
-    { to: "/cart", label: "Pedido", icon: IconShoppingCart },
-    { to: "/profile", label: "Perfil", icon: IconUser },
+    { to: "/rewards", label: "Prêmios", icon: IconGift },
+    { to: "/order", label: "Pedidos", icon: IconReceipt },
   ];
 
   useEffect(() => {
-    if (!location.pathname.startsWith("/menu")) {
-      setVisible(true);
+    if (location.pathname.startsWith("/profile")) {
+      setVisible(false);
       return;
+    } else {
+      visible ? null : setVisible(true);
     }
 
     const handleScroll = () => {

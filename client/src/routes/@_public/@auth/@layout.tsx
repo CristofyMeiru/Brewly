@@ -29,7 +29,9 @@ function RouteComponent() {
       </header>
       <Separator className={" mb-4 "} />
 
-      <Outlet />
+      <div className=" flex-1 ">
+        <Outlet />
+      </div>
     </React.Fragment>
   );
 }

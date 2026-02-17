@@ -15,13 +15,14 @@ import { Route as PageRouteImport } from './routes/@page'
 import { Route as PublicAuthLayoutRouteImport } from './routes/@_public/@auth/@layout'
 import { Route as AppPrivateLayoutRouteImport } from './routes/@_app/@_private/@layout'
 import { Route as AppAdminLayoutRouteImport } from './routes/@_app/@_admin/@layout'
-import { Route as AppProfilePageRouteImport } from './routes/@_app/@profile/@page'
+import { Route as AppRewardsPageRouteImport } from './routes/@_app/@rewards/@page'
+import { Route as AppOrderPageRouteImport } from './routes/@_app/@order/@page'
 import { Route as AppMenuPageRouteImport } from './routes/@_app/@menu/@page'
 import { Route as PublicAuthVerificationPageRouteImport } from './routes/@_public/@auth/@verification/@page'
 import { Route as PublicAuthSignUpPageRouteImport } from './routes/@_public/@auth/@sign-up/@page'
 import { Route as PublicAuthSignInPageRouteImport } from './routes/@_public/@auth/@sign-in/@page'
 import { Route as PublicAuthForgotPasswordPageRouteImport } from './routes/@_public/@auth/@forgot-password/@page'
-import { Route as AppPrivateHomePageRouteImport } from './routes/@_app/@_private/@home/@page'
+import { Route as AppPrivateProfilePageRouteImport } from './routes/@_app/@_private/@profile/@page'
 import { Route as AppPrivateCartPageRouteImport } from './routes/@_app/@_private/@cart/@page'
 import { Route as AppAdminManagePageRouteImport } from './routes/@_app/@_admin/@manage/@page'
 
@@ -51,9 +52,14 @@ const AppAdminLayoutRoute = AppAdminLayoutRouteImport.update({
   id: '/_admin',
   getParentRoute: () => AppLayoutRoute,
 } as any)
-const AppProfilePageRoute = AppProfilePageRouteImport.update({
-  id: '/profile/',
-  path: '/profile/',
+const AppRewardsPageRoute = AppRewardsPageRouteImport.update({
+  id: '/rewards/',
+  path: '/rewards/',
+  getParentRoute: () => AppLayoutRoute,
+} as any)
+const AppOrderPageRoute = AppOrderPageRouteImport.update({
+  id: '/order/',
+  path: '/order/',
   getParentRoute: () => AppLayoutRoute,
 } as any)
 const AppMenuPageRoute = AppMenuPageRouteImport.update({
@@ -83,9 +89,9 @@ const PublicAuthForgotPasswordPageRoute =
     path: '/forgot-password/',
     getParentRoute: () => PublicAuthLayoutRoute,
   } as any)
-const AppPrivateHomePageRoute = AppPrivateHomePageRouteImport.update({
-  id: '/home/',
-  path: '/home/',
+const AppPrivateProfilePageRoute = AppPrivateProfilePageRouteImport.update({
+  id: '/profile/',
+  path: '/profile/',
   getParentRoute: () => AppPrivateLayoutRoute,
 } as any)
 const AppPrivateCartPageRoute = AppPrivateCartPageRouteImport.update({
@@ -103,10 +109,11 @@ export interface FileRoutesByFullPath {
   '/': typeof PageRoute
   '/auth': typeof PublicAuthLayoutRouteWithChildren
   '/menu/': typeof AppMenuPageRoute
-  '/profile/': typeof AppProfilePageRoute
+  '/order/': typeof AppOrderPageRoute
+  '/rewards/': typeof AppRewardsPageRoute
   '/manage/': typeof AppAdminManagePageRoute
   '/cart/': typeof AppPrivateCartPageRoute
-  '/home/': typeof AppPrivateHomePageRoute
+  '/profile/': typeof AppPrivateProfilePageRoute
   '/auth/forgot-password/': typeof PublicAuthForgotPasswordPageRoute
   '/auth/sign-in/': typeof PublicAuthSignInPageRoute
   '/auth/sign-up/': typeof PublicAuthSignUpPageRoute
@@ -116,10 +123,11 @@ export interface FileRoutesByTo {
   '/': typeof PageRoute
   '/auth': typeof PublicAuthLayoutRouteWithChildren
   '/menu': typeof AppMenuPageRoute
-  '/profile': typeof AppProfilePageRoute
+  '/order': typeof AppOrderPageRoute
+  '/rewards': typeof AppRewardsPageRoute
   '/manage': typeof AppAdminManagePageRoute
   '/cart': typeof AppPrivateCartPageRoute
-  '/home': typeof AppPrivateHomePageRoute
+  '/profile': typeof AppPrivateProfilePageRoute
   '/auth/forgot-password': typeof PublicAuthForgotPasswordPageRoute
   '/auth/sign-in': typeof PublicAuthSignInPageRoute
   '/auth/sign-up': typeof PublicAuthSignUpPageRoute
@@ -134,10 +142,11 @@ export interface FileRoutesById {
   '/_app/_private': typeof AppPrivateLayoutRouteWithChildren
   '/_public/auth': typeof PublicAuthLayoutRouteWithChildren
   '/_app/menu/': typeof AppMenuPageRoute
-  '/_app/profile/': typeof AppProfilePageRoute
+  '/_app/order/': typeof AppOrderPageRoute
+  '/_app/rewards/': typeof AppRewardsPageRoute
   '/_app/_admin/manage/': typeof AppAdminManagePageRoute
   '/_app/_private/cart/': typeof AppPrivateCartPageRoute
-  '/_app/_private/home/': typeof AppPrivateHomePageRoute
+  '/_app/_private/profile/': typeof AppPrivateProfilePageRoute
   '/_public/auth/forgot-password/': typeof PublicAuthForgotPasswordPageRoute
   '/_public/auth/sign-in/': typeof PublicAuthSignInPageRoute
   '/_public/auth/sign-up/': typeof PublicAuthSignUpPageRoute
@@ -149,10 +158,11 @@ export interface FileRouteTypes {
     | '/'
     | '/auth'
     | '/menu/'
-    | '/profile/'
+    | '/order/'
+    | '/rewards/'
     | '/manage/'
     | '/cart/'
-    | '/home/'
+    | '/profile/'
     | '/auth/forgot-password/'
     | '/auth/sign-in/'
     | '/auth/sign-up/'
@@ -162,10 +172,11 @@ export interface FileRouteTypes {
     | '/'
     | '/auth'
     | '/menu'
-    | '/profile'
+    | '/order'
+    | '/rewards'
     | '/manage'
     | '/cart'
-    | '/home'
+    | '/profile'
     | '/auth/forgot-password'
     | '/auth/sign-in'
     | '/auth/sign-up'
@@ -179,10 +190,11 @@ export interface FileRouteTypes {
     | '/_app/_private'
     | '/_public/auth'
     | '/_app/menu/'
-    | '/_app/profile/'
+    | '/_app/order/'
+    | '/_app/rewards/'
     | '/_app/_admin/manage/'
     | '/_app/_private/cart/'
-    | '/_app/_private/home/'
+    | '/_app/_private/profile/'
     | '/_public/auth/forgot-password/'
     | '/_public/auth/sign-in/'
     | '/_public/auth/sign-up/'
@@ -239,11 +251,18 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AppAdminLayoutRouteImport
       parentRoute: typeof AppLayoutRoute
     }
-    '/_app/profile/': {
-      id: '/_app/profile/'
-      path: '/profile'
-      fullPath: '/profile/'
-      preLoaderRoute: typeof AppProfilePageRouteImport
+    '/_app/rewards/': {
+      id: '/_app/rewards/'
+      path: '/rewards'
+      fullPath: '/rewards/'
+      preLoaderRoute: typeof AppRewardsPageRouteImport
+      parentRoute: typeof AppLayoutRoute
+    }
+    '/_app/order/': {
+      id: '/_app/order/'
+      path: '/order'
+      fullPath: '/order/'
+      preLoaderRoute: typeof AppOrderPageRouteImport
       parentRoute: typeof AppLayoutRoute
     }
     '/_app/menu/': {
@@ -281,11 +300,11 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof PublicAuthForgotPasswordPageRouteImport
       parentRoute: typeof PublicAuthLayoutRoute
     }
-    '/_app/_private/home/': {
-      id: '/_app/_private/home/'
-      path: '/home'
-      fullPath: '/home/'
-      preLoaderRoute: typeof AppPrivateHomePageRouteImport
+    '/_app/_private/profile/': {
+      id: '/_app/_private/profile/'
+      path: '/profile'
+      fullPath: '/profile/'
+      preLoaderRoute: typeof AppPrivateProfilePageRouteImport
       parentRoute: typeof AppPrivateLayoutRoute
     }
     '/_app/_private/cart/': {
@@ -319,12 +338,12 @@ const AppAdminLayoutRouteWithChildren = AppAdminLayoutRoute._addFileChildren(
 
 interface AppPrivateLayoutRouteChildren {
   AppPrivateCartPageRoute: typeof AppPrivateCartPageRoute
-  AppPrivateHomePageRoute: typeof AppPrivateHomePageRoute
+  AppPrivateProfilePageRoute: typeof AppPrivateProfilePageRoute
 }
 
 const AppPrivateLayoutRouteChildren: AppPrivateLayoutRouteChildren = {
   AppPrivateCartPageRoute: AppPrivateCartPageRoute,
-  AppPrivateHomePageRoute: AppPrivateHomePageRoute,
+  AppPrivateProfilePageRoute: AppPrivateProfilePageRoute,
 }
 
 const AppPrivateLayoutRouteWithChildren =
@@ -334,14 +353,16 @@ interface AppLayoutRouteChildren {
   AppAdminLayoutRoute: typeof AppAdminLayoutRouteWithChildren
   AppPrivateLayoutRoute: typeof AppPrivateLayoutRouteWithChildren
   AppMenuPageRoute: typeof AppMenuPageRoute
-  AppProfilePageRoute: typeof AppProfilePageRoute
+  AppOrderPageRoute: typeof AppOrderPageRoute
+  AppRewardsPageRoute: typeof AppRewardsPageRoute
 }
 
 const AppLayoutRouteChildren: AppLayoutRouteChildren = {
   AppAdminLayoutRoute: AppAdminLayoutRouteWithChildren,
   AppPrivateLayoutRoute: AppPrivateLayoutRouteWithChildren,
   AppMenuPageRoute: AppMenuPageRoute,
-  AppProfilePageRoute: AppProfilePageRoute,
+  AppOrderPageRoute: AppOrderPageRoute,
+  AppRewardsPageRoute: AppRewardsPageRoute,
 }
 
 const AppLayoutRouteWithChildren = AppLayoutRoute._addFileChildren(

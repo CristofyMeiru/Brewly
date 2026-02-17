@@ -7,7 +7,7 @@ export default function SignInSocial() {
 
   return (
     <div className=" w-full flex flex-col ">
-      <Button onClick={() => signInSocialGoogleMutation.mutate()} variant={"outline"}>
+      <Button size={"lg"} onClick={() => signInSocialGoogleMutation.mutate()} variant={"outline"}>
         <IconGoogleLogo />
         Entrar com Google
       </Button>

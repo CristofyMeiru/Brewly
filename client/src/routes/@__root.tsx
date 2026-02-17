@@ -1,8 +1,10 @@
 import { APP_NAME } from "@/common/constants/metadata";
 import { authService } from "@/shared/services/auth.service";
+import { TanStackDevtools } from "@tanstack/react-devtools";
 import type { QueryClient } from "@tanstack/react-query";
+import { ReactQueryDevtoolsPanel } from "@tanstack/react-query-devtools";
 import { HeadContent, Outlet, Scripts, createRootRouteWithContext, defer } from "@tanstack/react-router";
-import { TanStackRouterDevtools } from "@tanstack/react-router-devtools";
+import { TanStackRouterDevtoolsPanel } from "@tanstack/react-router-devtools";
 import type { Session } from "better-auth";
 import type { UserWithRole } from "better-auth/plugins";
 
@@ -13,8 +15,20 @@ export type AuthState = {
 
 interface RouterContext {
   queryClient: QueryClient;
-  authState?: AuthState;
 }
+
+const plugins = [
+  {
+    name: "TanStack Query",
+    render: <ReactQueryDevtoolsPanel />,
+    defaultOpen: true,
+  },
+  {
+    name: "TanStack Router",
+    render: <TanStackRouterDevtoolsPanel />,
+    defaultOpen: false,
+  },
+];
 
 export const Route = createRootRouteWithContext<RouterContext>()({
   component: RootComponent,
@@ -42,8 +56,8 @@ function RootComponent() {
         <Outlet />
       </div>
 
+      <TanStackDevtools config={{ position: "bottom-left", hideUntilHover: true }} plugins={plugins} />
       <Scripts />
-      <TanStackRouterDevtools />
     </div>
   );
 }

@@ -9,7 +9,7 @@ import { routeTree } from "./routeTree.gen";
 const queryClient = new QueryClient();
 const router = createRouter({
   routeTree,
-  context: { queryClient, authState: undefined },
+  context: { queryClient },
   scrollRestoration: true,
   defaultPreload: "intent",
 });

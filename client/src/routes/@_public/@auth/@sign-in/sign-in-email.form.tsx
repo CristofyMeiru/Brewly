@@ -120,7 +120,7 @@ export default function SignInEmailForm() {
       <form.Subscribe
         selector={(state) => [state.canSubmit, state.isSubmitting]}
         children={([canSubmit, isSubmitting]) => (
-          <Button type="submit" className="w-full" disabled={!canSubmit || isSubmitting}>
+          <Button type="submit" size={"lg"} className="w-full" disabled={!canSubmit || isSubmitting}>
             {isSubmitting ? (
               <>
                 <Spinner />

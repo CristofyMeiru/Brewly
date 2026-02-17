@@ -19,12 +19,14 @@ export function MenuHeader({ authState }: { authState: NonNullable<AuthState> })
             <IconShoppingCart className=" size-6 " />
           </Button>
         </Link>
-        <Avatar size="lg">
-          <AvatarFallback>
-            <IconUser />
-          </AvatarFallback>
-          <AvatarImage src={authState.user.image ?? ""} />
-        </Avatar>
+        <Link to="/profile">
+          <Avatar size="lg">
+            <AvatarFallback>
+              <IconUser />
+            </AvatarFallback>
+            <AvatarImage src={authState.user.image ?? ""} />
+          </Avatar>
+        </Link>
       </section>
     </div>
   );
@@ -36,18 +38,22 @@ export function MenuHeaderAnnon() {
       <div>
         <h2 className="text-sm leading-snug text-muted-foreground">Bem vindo!</h2>
         <Link to="/auth/sign-in" className="text-sm font-bold underline">
-          <Badge className=" cursor-pointer text-[14px] ">Fazer login</Badge>
+          <Badge className=" cursor-pointer text-[14px] ">Entrar na conta</Badge>
         </Link>
       </div>
       <section className="flex items-center space-x-2">
-        <Button className="size-11 rounded-full" variant="secondary" disabled>
-          <IconShoppingCart className="size-6" />
-        </Button>
-        <Avatar size="lg">
-          <AvatarFallback>
-            <IconUser />
-          </AvatarFallback>
-        </Avatar>
+        <Link to="/cart">
+          <Button className="size-11 rounded-full" variant="secondary" disabled>
+            <IconShoppingCart className="size-6" />
+          </Button>
+        </Link>
+        <Link to="/profile">
+          <Avatar size="lg">
+            <AvatarFallback>
+              <IconUser />
+            </AvatarFallback>
+          </Avatar>
+        </Link>
       </section>
     </div>
   );
@@ -57,7 +63,7 @@ export function LoaderMenuHeader() {
   return (
     <div className="w-full flex justify-between items-center py-7 px-2">
       <div className="space-y-2">
-        <Skeleton className="h-4 w-20" /> 
+        <Skeleton className="h-4 w-20" />
         <Skeleton className="h-5 w-32" />
       </div>
 
