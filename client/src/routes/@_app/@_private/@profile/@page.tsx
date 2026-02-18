@@ -4,7 +4,7 @@ import { Route as RootRoute } from "@/routes/@__root";
 import { IconChevronLeft } from "@tabler/icons-react";
 import { Await, createFileRoute, useCanGoBack, useRouter } from "@tanstack/react-router";
 import { PhotoProfile, PhotoProfileLoader } from "./photo-profile";
-import ProfileInfo from "./profile-info";
+import {ProfileInfo, ProfileInfoLoader} from "./profile-info";
 
 export const Route = createFileRoute("/_app/_private/profile/")({
   component: RouteComponent,
@@ -30,12 +30,12 @@ function RouteComponent() {
           Perfil
         </Button>
       </div>
-      <div className=" mt-10 w-full max-w-md flex items-center flex-col ">
+      <div className=" mt-10 w-full max-w-md space-y-10 flex items-center flex-col ">
         <Await promise={authStatePromise} fallback={<PhotoProfileLoader />}>
           {({ data }) => <PhotoProfile authState={data} />}
         </Await>
 
-        <Await promise={authStatePromise} fallback={<Skeleton />}>
+        <Await promise={authStatePromise} fallback={<ProfileInfoLoader />}>
           {({ data }) => <ProfileInfo authState={data} />}
         </Await>
       </div>

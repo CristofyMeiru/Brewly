@@ -22,5 +22,10 @@ export const user: BetterAuthOptions['user'] = {
       type: 'boolean',
       defaultValue: false,
     },
+    phoneNumber: {
+      type: 'string',
+      required: false,
+      returned: true,
+    },
   },
 };

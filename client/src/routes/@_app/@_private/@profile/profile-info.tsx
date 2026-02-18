@@ -1,6 +1,7 @@
 import { Item, ItemActions, ItemContent, ItemDescription, ItemMedia, ItemTitle } from "@/components/ui/item";
+import { Skeleton } from "@/components/ui/skeleton";
 import type { AuthState, User } from "@/shared/@types/auth.types";
-import { IconAlertCircle, IconId, IconMail, IconUser } from "@tabler/icons-react";
+import { IconAlertCircle, IconId, IconMail, IconPhone, IconUser } from "@tabler/icons-react";
 import type { ExoticComponent } from "react";
 
 type InfoItem = {
@@ -25,15 +26,20 @@ const infoItems: InfoItem[] = [
     key: "cpfMasked",
     icon: IconId,
   },
+  {
+    label: "Número de celular",
+    key: "phoneNumber",
+    icon: IconPhone,
+  },
 ];
 
-export default function ProfileInfo({ authState: { user } }: { authState: AuthState }) {
+export function ProfileInfo({ authState: { user } }: { authState: AuthState }) {
   return (
     <div className=" w-full ">
       {infoItems.map((item) => {
         const Icon = item.icon;
         return (
-          <Item>
+          <Item key={item.key}>
             <ItemMedia variant={"icon"}>
               <Icon />
             </ItemMedia>
@@ -42,6 +48,30 @@ export default function ProfileInfo({ authState: { user } }: { authState: AuthSt
               <ItemTitle>{user[item.key] ? String(user[item.key]) : "Não informado"}</ItemTitle>
             </ItemContent>
             <ItemActions>{!user[item.key] && <IconAlertCircle className=" text-destructive " />}</ItemActions>
+          </Item>
+        );
+      })}
+    </div>
+  );
+}
+
+export function ProfileInfoLoader() {
+  return (
+    <div className=" w-full ">
+      {infoItems.map((item) => {
+        return (
+          <Item key={item.key}>
+            <ItemMedia variant={"icon"}>
+              <Skeleton className=" size-5 " />
+            </ItemMedia>
+            <ItemContent className=" space-y-4 ">
+              <ItemDescription>
+                <Skeleton className=" h-4 w-10 " />
+              </ItemDescription>
+              <ItemTitle>
+                <Skeleton className=" h-3 w-60 " />
+              </ItemTitle>
+            </ItemContent>
           </Item>
         );
       })}

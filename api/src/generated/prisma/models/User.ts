@@ -40,6 +40,7 @@ export type UserMinAggregateOutputType = {
   cpfEncrypted: string | null
   cpfMasked: string | null
   isCpfVerified: boolean | null
+  phoneNumber: string | null
 }
 
 export type UserMaxAggregateOutputType = {
@@ -58,6 +59,7 @@ export type UserMaxAggregateOutputType = {
   cpfEncrypted: string | null
   cpfMasked: string | null
   isCpfVerified: boolean | null
+  phoneNumber: string | null
 }
 
 export type UserCountAggregateOutputType = {
@@ -76,6 +78,7 @@ export type UserCountAggregateOutputType = {
   cpfEncrypted: number
   cpfMasked: number
   isCpfVerified: number
+  phoneNumber: number
   _all: number
 }
 
@@ -96,6 +99,7 @@ export type UserMinAggregateInputType = {
   cpfEncrypted?: true
   cpfMasked?: true
   isCpfVerified?: true
+  phoneNumber?: true
 }
 
 export type UserMaxAggregateInputType = {
@@ -114,6 +118,7 @@ export type UserMaxAggregateInputType = {
   cpfEncrypted?: true
   cpfMasked?: true
   isCpfVerified?: true
+  phoneNumber?: true
 }
 
 export type UserCountAggregateInputType = {
@@ -132,6 +137,7 @@ export type UserCountAggregateInputType = {
   cpfEncrypted?: true
   cpfMasked?: true
   isCpfVerified?: true
+  phoneNumber?: true
   _all?: true
 }
 
@@ -223,6 +229,7 @@ export type UserGroupByOutputType = {
   cpfEncrypted: string | null
   cpfMasked: string | null
   isCpfVerified: boolean | null
+  phoneNumber: string | null
   _count: UserCountAggregateOutputType | null
   _min: UserMinAggregateOutputType | null
   _max: UserMaxAggregateOutputType | null
@@ -262,6 +269,7 @@ export type UserWhereInput = {
   cpfEncrypted?: Prisma.StringNullableFilter<"User"> | string | null
   cpfMasked?: Prisma.StringNullableFilter<"User"> | string | null
   isCpfVerified?: Prisma.BoolNullableFilter<"User"> | boolean | null
+  phoneNumber?: Prisma.StringNullableFilter<"User"> | string | null
   sessions?: Prisma.SessionListRelationFilter
   accounts?: Prisma.AccountListRelationFilter
 }
@@ -282,6 +290,7 @@ export type UserOrderByWithRelationInput = {
   cpfEncrypted?: Prisma.SortOrderInput | Prisma.SortOrder
   cpfMasked?: Prisma.SortOrderInput | Prisma.SortOrder
   isCpfVerified?: Prisma.SortOrderInput | Prisma.SortOrder
+  phoneNumber?: Prisma.SortOrderInput | Prisma.SortOrder
   sessions?: Prisma.SessionOrderByRelationAggregateInput
   accounts?: Prisma.AccountOrderByRelationAggregateInput
 }
@@ -305,6 +314,7 @@ export type UserWhereUniqueInput = Prisma.AtLeast<{
   cpfEncrypted?: Prisma.StringNullableFilter<"User"> | string | null
   cpfMasked?: Prisma.StringNullableFilter<"User"> | string | null
   isCpfVerified?: Prisma.BoolNullableFilter<"User"> | boolean | null
+  phoneNumber?: Prisma.StringNullableFilter<"User"> | string | null
   sessions?: Prisma.SessionListRelationFilter
   accounts?: Prisma.AccountListRelationFilter
 }, "id" | "email" | "cpfHash">
@@ -325,6 +335,7 @@ export type UserOrderByWithAggregationInput = {
   cpfEncrypted?: Prisma.SortOrderInput | Prisma.SortOrder
   cpfMasked?: Prisma.SortOrderInput | Prisma.SortOrder
   isCpfVerified?: Prisma.SortOrderInput | Prisma.SortOrder
+  phoneNumber?: Prisma.SortOrderInput | Prisma.SortOrder
   _count?: Prisma.UserCountOrderByAggregateInput
   _max?: Prisma.UserMaxOrderByAggregateInput
   _min?: Prisma.UserMinOrderByAggregateInput
@@ -349,6 +360,7 @@ export type UserScalarWhereWithAggregatesInput = {
   cpfEncrypted?: Prisma.StringNullableWithAggregatesFilter<"User"> | string | null
   cpfMasked?: Prisma.StringNullableWithAggregatesFilter<"User"> | string | null
   isCpfVerified?: Prisma.BoolNullableWithAggregatesFilter<"User"> | boolean | null
+  phoneNumber?: Prisma.StringNullableWithAggregatesFilter<"User"> | string | null
 }
 
 export type UserCreateInput = {
@@ -367,6 +379,7 @@ export type UserCreateInput = {
   cpfEncrypted?: string | null
   cpfMasked?: string | null
   isCpfVerified?: boolean | null
+  phoneNumber?: string | null
   sessions?: Prisma.SessionCreateNestedManyWithoutUserInput
   accounts?: Prisma.AccountCreateNestedManyWithoutUserInput
 }
@@ -387,6 +400,7 @@ export type UserUncheckedCreateInput = {
   cpfEncrypted?: string | null
   cpfMasked?: string | null
   isCpfVerified?: boolean | null
+  phoneNumber?: string | null
   sessions?: Prisma.SessionUncheckedCreateNestedManyWithoutUserInput
   accounts?: Prisma.AccountUncheckedCreateNestedManyWithoutUserInput
 }
@@ -407,6 +421,7 @@ export type UserUpdateInput = {
   cpfEncrypted?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   cpfMasked?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isCpfVerified?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
+  phoneNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   sessions?: Prisma.SessionUpdateManyWithoutUserNestedInput
   accounts?: Prisma.AccountUpdateManyWithoutUserNestedInput
 }
@@ -427,6 +442,7 @@ export type UserUncheckedUpdateInput = {
   cpfEncrypted?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   cpfMasked?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isCpfVerified?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
+  phoneNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   sessions?: Prisma.SessionUncheckedUpdateManyWithoutUserNestedInput
   accounts?: Prisma.AccountUncheckedUpdateManyWithoutUserNestedInput
 }
@@ -447,6 +463,7 @@ export type UserCreateManyInput = {
   cpfEncrypted?: string | null
   cpfMasked?: string | null
   isCpfVerified?: boolean | null
+  phoneNumber?: string | null
 }
 
 export type UserUpdateManyMutationInput = {
@@ -465,6 +482,7 @@ export type UserUpdateManyMutationInput = {
   cpfEncrypted?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   cpfMasked?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isCpfVerified?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
+  phoneNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
 }
 
 export type UserUncheckedUpdateManyInput = {
@@ -483,6 +501,7 @@ export type UserUncheckedUpdateManyInput = {
   cpfEncrypted?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   cpfMasked?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isCpfVerified?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
+  phoneNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
 }
 
 export type UserCountOrderByAggregateInput = {
@@ -501,6 +520,7 @@ export type UserCountOrderByAggregateInput = {
   cpfEncrypted?: Prisma.SortOrder
   cpfMasked?: Prisma.SortOrder
   isCpfVerified?: Prisma.SortOrder
+  phoneNumber?: Prisma.SortOrder
 }
 
 export type UserMaxOrderByAggregateInput = {
@@ -519,6 +539,7 @@ export type UserMaxOrderByAggregateInput = {
   cpfEncrypted?: Prisma.SortOrder
   cpfMasked?: Prisma.SortOrder
   isCpfVerified?: Prisma.SortOrder
+  phoneNumber?: Prisma.SortOrder
 }
 
 export type UserMinOrderByAggregateInput = {
@@ -537,6 +558,7 @@ export type UserMinOrderByAggregateInput = {
   cpfEncrypted?: Prisma.SortOrder
   cpfMasked?: Prisma.SortOrder
   isCpfVerified?: Prisma.SortOrder
+  phoneNumber?: Prisma.SortOrder
 }
 
 export type UserScalarRelationFilter = {
@@ -612,6 +634,7 @@ export type UserCreateWithoutSessionsInput = {
   cpfEncrypted?: string | null
   cpfMasked?: string | null
   isCpfVerified?: boolean | null
+  phoneNumber?: string | null
   accounts?: Prisma.AccountCreateNestedManyWithoutUserInput
 }
 
@@ -631,6 +654,7 @@ export type UserUncheckedCreateWithoutSessionsInput = {
   cpfEncrypted?: string | null
   cpfMasked?: string | null
   isCpfVerified?: boolean | null
+  phoneNumber?: string | null
   accounts?: Prisma.AccountUncheckedCreateNestedManyWithoutUserInput
 }
 
@@ -666,6 +690,7 @@ export type UserUpdateWithoutSessionsInput = {
   cpfEncrypted?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   cpfMasked?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isCpfVerified?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
+  phoneNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   accounts?: Prisma.AccountUpdateManyWithoutUserNestedInput
 }
 
@@ -685,6 +710,7 @@ export type UserUncheckedUpdateWithoutSessionsInput = {
   cpfEncrypted?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   cpfMasked?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isCpfVerified?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
+  phoneNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   accounts?: Prisma.AccountUncheckedUpdateManyWithoutUserNestedInput
 }
 
@@ -704,6 +730,7 @@ export type UserCreateWithoutAccountsInput = {
   cpfEncrypted?: string | null
   cpfMasked?: string | null
   isCpfVerified?: boolean | null
+  phoneNumber?: string | null
   sessions?: Prisma.SessionCreateNestedManyWithoutUserInput
 }
 
@@ -723,6 +750,7 @@ export type UserUncheckedCreateWithoutAccountsInput = {
   cpfEncrypted?: string | null
   cpfMasked?: string | null
   isCpfVerified?: boolean | null
+  phoneNumber?: string | null
   sessions?: Prisma.SessionUncheckedCreateNestedManyWithoutUserInput
 }
 
@@ -758,6 +786,7 @@ export type UserUpdateWithoutAccountsInput = {
   cpfEncrypted?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   cpfMasked?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isCpfVerified?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
+  phoneNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   sessions?: Prisma.SessionUpdateManyWithoutUserNestedInput
 }
 
@@ -777,6 +806,7 @@ export type UserUncheckedUpdateWithoutAccountsInput = {
   cpfEncrypted?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   cpfMasked?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isCpfVerified?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
+  phoneNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   sessions?: Prisma.SessionUncheckedUpdateManyWithoutUserNestedInput
 }
 
@@ -836,6 +866,7 @@ export type UserSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = r
   cpfEncrypted?: boolean
   cpfMasked?: boolean
   isCpfVerified?: boolean
+  phoneNumber?: boolean
   sessions?: boolean | Prisma.User$sessionsArgs<ExtArgs>
   accounts?: boolean | Prisma.User$accountsArgs<ExtArgs>
   _count?: boolean | Prisma.UserCountOutputTypeDefaultArgs<ExtArgs>
@@ -857,6 +888,7 @@ export type UserSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensio
   cpfEncrypted?: boolean
   cpfMasked?: boolean
   isCpfVerified?: boolean
+  phoneNumber?: boolean
 }, ExtArgs["result"]["user"]>
 
 export type UserSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
@@ -875,6 +907,7 @@ export type UserSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensio
   cpfEncrypted?: boolean
   cpfMasked?: boolean
   isCpfVerified?: boolean
+  phoneNumber?: boolean
 }, ExtArgs["result"]["user"]>
 
 export type UserSelectScalar = {
@@ -893,9 +926,10 @@ export type UserSelectScalar = {
   cpfEncrypted?: boolean
   cpfMasked?: boolean
   isCpfVerified?: boolean
+  phoneNumber?: boolean
 }
 
-export type UserOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "name" | "email" | "emailVerified" | "image" | "createdAt" | "updatedAt" | "role" | "banned" | "banReason" | "banExpires" | "cpfHash" | "cpfEncrypted" | "cpfMasked" | "isCpfVerified", ExtArgs["result"]["user"]>
+export type UserOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "name" | "email" | "emailVerified" | "image" | "createdAt" | "updatedAt" | "role" | "banned" | "banReason" | "banExpires" | "cpfHash" | "cpfEncrypted" | "cpfMasked" | "isCpfVerified" | "phoneNumber", ExtArgs["result"]["user"]>
 export type UserInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   sessions?: boolean | Prisma.User$sessionsArgs<ExtArgs>
   accounts?: boolean | Prisma.User$accountsArgs<ExtArgs>
@@ -926,6 +960,7 @@ export type $UserPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs =
     cpfEncrypted: string | null
     cpfMasked: string | null
     isCpfVerified: boolean | null
+    phoneNumber: string | null
   }, ExtArgs["result"]["user"]>
   composites: {}
 }
@@ -1366,6 +1401,7 @@ export interface UserFieldRefs {
   readonly cpfEncrypted: Prisma.FieldRef<"User", 'String'>
   readonly cpfMasked: Prisma.FieldRef<"User", 'String'>
   readonly isCpfVerified: Prisma.FieldRef<"User", 'Boolean'>
+  readonly phoneNumber: Prisma.FieldRef<"User", 'String'>
 }
     
 

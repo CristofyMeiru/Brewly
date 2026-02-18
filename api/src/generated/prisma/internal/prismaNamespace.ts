@@ -757,7 +757,8 @@ export const UserScalarFieldEnum = {
   cpfHash: 'cpfHash',
   cpfEncrypted: 'cpfEncrypted',
   cpfMasked: 'cpfMasked',
-  isCpfVerified: 'isCpfVerified'
+  isCpfVerified: 'isCpfVerified',
+  phoneNumber: 'phoneNumber'
 } as const
 
 export type UserScalarFieldEnum = (typeof UserScalarFieldEnum)[keyof typeof UserScalarFieldEnum]
