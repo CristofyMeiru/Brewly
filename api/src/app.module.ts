@@ -6,6 +6,7 @@ import { validate } from './config-env';
 import { AddressModule } from './modules/address/address.module';
 import { AuthModule } from './modules/auth/auth.module';
 import { HasPermissionGuard } from './modules/auth/has-permission.guard';
+import { ProductModule } from './modules/product/product.module';
 
 @Module({
   imports: [
@@ -16,6 +17,7 @@ import { HasPermissionGuard } from './modules/auth/has-permission.guard';
     CqrsModule.forRoot(),
     AuthModule,
     AddressModule,
+    ProductModule,
   ],
   controllers: [],
   providers: [{ provide: APP_GUARD, useClass: HasPermissionGuard }],
