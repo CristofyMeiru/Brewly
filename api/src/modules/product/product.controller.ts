@@ -1,4 +1,4 @@
-import { Body, Controller, Get, Param, Post, Query, UseInterceptors } from '@nestjs/common';
+import { Body, Controller, Delete, Get, HttpCode, Param, Post, Query, UseInterceptors } from '@nestjs/common';
 import { CommandBus, QueryBus } from '@nestjs/cqrs';
 import { ApiCreatedResponse, ApiOkResponse } from '@nestjs/swagger';
 import { Storage } from '@src/@types/global';
@@ -7,9 +7,12 @@ import { ApiFile, Files } from '@src/common/decorators/files.decorator';
 import { ProductEntity } from '@src/common/entities/product.entity';
 import { MultipartInterceptor } from '@src/common/interceptors/files.interceptor';
 import { plainToClass } from 'class-transformer';
+import { AllowAnonymous } from '../auth/decorators/auth.decorators';
 import { Permissions } from '../auth/permissions.decorator';
 import { CreateProductCommand } from './commands/create-product/create-product.command';
 import { CreateProductBodyDto } from './commands/create-product/create-product.dto';
+import { DeleteProductCommand } from './commands/delete-product/delete-product.command';
+import { DeleteProductParamsDto } from './commands/delete-product/delete-product.dto';
 import { UploadProductImageCommand } from './commands/upload-product-image/upload-product-image.command';
 import { UploadProductImageParamsDto } from './commands/upload-product-image/upload-product-image.dto';
 import { FindProductParamsDto } from './queries/find-product/find-product.dto';
@@ -42,6 +45,7 @@ export class ProductController {
     return this.commandBus.execute(command);
   }
 
+  @AllowAnonymous()
   @Get(':id')
   @ApiOkResponse({ type: ProductEntity })
   findOne(@Param() params: FindProductParamsDto) {
@@ -49,10 +53,19 @@ export class ProductController {
     return this.queryBus.execute(query);
   }
 
+  @AllowAnonymous()
   @ApiOkResponse({ type: [ProductEntity] })
   @Get()
   find(@Query() queryString: FindProductsQueryDto) {
     const query = plainToClass(FindProductsQuery, queryString);
     return this.queryBus.execute(query);
+  }
+
+  @Permissions({ scope: 'admin', resource: 'product', action: ['delete'] })
+  @HttpCode(204)
+  @Delete(':id')
+  async delete(@Param() params: DeleteProductParamsDto) {
+    const command = plainToClass(DeleteProductCommand, params);
+    await this.commandBus.execute(command);
   }
 }
