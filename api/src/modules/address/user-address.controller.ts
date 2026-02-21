@@ -7,7 +7,7 @@ import { FindAddressByUserParamsDto } from './queries/find-by-user/find-by-user.
 import { FindAddressByUserQuery } from './queries/find-by-user/find-by-user.query';
 
 @ApiTags('Address')
-@Controller({ path: 'user' })
+@Controller({ path: 'user', version: '1' })
 export class UserAddressController {
   constructor(private readonly queryBus: QueryBus) {}
 

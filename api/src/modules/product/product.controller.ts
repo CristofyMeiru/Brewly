@@ -1,4 +1,4 @@
-import { Body, Controller, Get, Param, Post, UseInterceptors } from '@nestjs/common';
+import { Body, Controller, Get, Param, Post, Query, UseInterceptors } from '@nestjs/common';
 import { CommandBus, QueryBus } from '@nestjs/cqrs';
 import { ApiCreatedResponse, ApiOkResponse } from '@nestjs/swagger';
 import { Storage } from '@src/@types/global';
@@ -14,8 +14,10 @@ import { UploadProductImageCommand } from './commands/upload-product-image/uploa
 import { UploadProductImageParamsDto } from './commands/upload-product-image/upload-product-image.dto';
 import { FindProductParamsDto } from './queries/find-product/find-product.dto';
 import { FindProductQuery } from './queries/find-product/find-product.query';
+import { FindProductsQueryDto } from './queries/find-products/find-products.dto';
+import { FindProductsQuery } from './queries/find-products/find-products.query';
 
-@Controller('product')
+@Controller({ path: 'products', version: '1' })
 export class ProductController {
   constructor(
     private readonly commandBus: CommandBus,
@@ -32,6 +34,7 @@ export class ProductController {
 
   @Permissions({ scope: 'admin', resource: 'product', action: ['update'] })
   @UseInterceptors(MultipartInterceptor({ fileType: /\/(jpg|jpeg|png)$/, maxFileSize: SIZE_MB * 2 }))
+  @ApiOkResponse({ type: ProductEntity })
   @ApiFile('file')
   @Post(':id/image')
   uploadImage(@Files() { file }: Record<string, Storage.MultipartFile>, @Param() params: UploadProductImageParamsDto) {
@@ -41,8 +44,15 @@ export class ProductController {
 
   @Get(':id')
   @ApiOkResponse({ type: ProductEntity })
-  async findOne(@Param() params: FindProductParamsDto) {
+  findOne(@Param() params: FindProductParamsDto) {
     const query = plainToClass(FindProductQuery, params);
+    return this.queryBus.execute(query);
+  }
+
+  @ApiOkResponse({ type: [ProductEntity] })
+  @Get()
+  find(@Query() queryString: FindProductsQueryDto) {
+    const query = plainToClass(FindProductsQuery, queryString);
     return this.queryBus.execute(query);
   }
 }

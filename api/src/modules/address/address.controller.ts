@@ -10,7 +10,7 @@ import { CreateAddressBodyDto } from './commands/create-address/create-address.d
 import { FindAddressParamsDto } from './queries/find-address/find-address.dto';
 import { FindAddressQuery } from './queries/find-address/find-address.query';
 
-@Controller('address')
+@Controller({ path: 'addresses', version: '1' })
 export class AddressController {
   constructor(
     private readonly commandBus: CommandBus,
