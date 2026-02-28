@@ -1,8 +1,9 @@
 import type { ToPath } from "@/shared/@types/to-path.type";
-import { IconCoffee, IconGiftFilled, IconReceiptFilled, type IconProps } from "@tabler/icons-react";
-import { Link, useLocation } from "@tanstack/react-router";
+import { IconCoffee, IconGiftFilled, IconReceiptFilled, IconSettingsFilled, type IconProps } from "@tabler/icons-react";
+import { Await, Link, useLocation } from "@tanstack/react-router";
 import type { ExoticComponent } from "react";
 import { useEffect, useRef, useState } from "react";
+import { Route as RootRoute } from "../@__root";
 
 type TabItem = {
   to: ToPath;
@@ -11,6 +12,7 @@ type TabItem = {
 };
 
 export function TabNavigator() {
+  const { authStatePromise } = RootRoute.useLoaderData();
   const location = useLocation();
   const [visible, setVisible] = useState(true);
   const lastScrollY = useRef(0);
@@ -69,6 +71,20 @@ export function TabNavigator() {
             </Link>
           );
         })}
+        <Await promise={authStatePromise} fallback={<></>}>
+          {({ data: { user } }) =>
+            user.role == "admin" && (
+              <Link
+                to={"/manage"}
+                activeProps={{ className: "text-primary" }}
+                className="flex flex-col items-center text-xs transition-colors"
+              >
+                <IconSettingsFilled size={22} stroke={1.8} />
+                <span className="mt-1">Gerenciar</span>
+              </Link>
+            )
+          }
+        </Await>
       </div>
     </nav>
   );

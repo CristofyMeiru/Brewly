@@ -1,8 +1,8 @@
 import { authClient } from "@/lib/auth-client";
-import type { AuthState } from "@/routes/@__root";
 import type { SignInEmail } from "@/routes/@_public/@auth/@sign-in/sign-in-email.schema";
 import type { SignUpEmail } from "@/routes/@_public/@auth/@sign-up/sign-up-email.schema";
 import type { BetterAuthError } from "better-auth";
+import type { AuthState } from "../@types/auth.types";
 
 export const authService = {
   async signUp({ email, name, password }: SignUpEmail) {
